@@ -1,5 +1,5 @@
 import React from "react";
-import Avatar from "@material-ui/core/Avatar";
+import { useState, useEffect } from "react";
 import Button from "@material-ui/core/Button";
 import CssBaseline from "@material-ui/core/CssBaseline";
 import TextField from "@material-ui/core/TextField";
@@ -8,52 +8,44 @@ import Checkbox from "@material-ui/core/Checkbox";
 import Link from "@material-ui/core/Link";
 import Grid from "@material-ui/core/Grid";
 import Box from "@material-ui/core/Box";
-import LockOutlinedIcon from "@material-ui/icons/LockOutlined";
 import Typography from "@material-ui/core/Typography";
 import { makeStyles } from "@material-ui/core/styles";
 import Container from "@material-ui/core/Container";
-import { FormControl, FormLabel, Radio, RadioGroup, InputLabel, Select } from "@material-ui/core";
+import { FormControl, InputLabel, Select } from "@material-ui/core";
 
 const enviarForm = (event) => {
   event.preventDefault();
 
+  const myForm = document.getElementById("myForm");
+
   var configHeaders = new Headers();
   configHeaders.append("Accept", "application/json");
 
-  var formdata = new FormData();
-  formdata.append("name", "Guilherme Pellegrini");
-  formdata.append("email", "pellegrini458@gmail.com");
-  formdata.append("password", "123456789");
-  formdata.append("password_confirmation", "123456789");
-  formdata.append("cep", "09425210");
-  formdata.append("address_name", "Casa");
-  formdata.append("address", "Rua Belo Horizonte");
-  formdata.append("district", "Bocaina");
-  formdata.append("number", "1614B");
-  formdata.append("cidade_id", "1");
-  formdata.append("estado_id", "1");
-  formdata.append("cpf", "45042316892");
+  var formdata = new FormData(myForm);
 
   var configFetch = {
-    method: 'POST',
+    method: "POST",
     headers: configHeaders,
     body: formdata,
-    redirect: 'follow'
+    redirect: "follow",
   };
 
   async function acessoFetch() {
-      const response = await fetch("http://localhost:8000/api/auth/register", configFetch);
-      const responseJson = await response.json();
-      return responseJson;
+    const response = await fetch(
+      "http://localhost:8000/api/auth/register",
+      configFetch
+    );
+    const responseJson = await response.json();
+    console.log(responseJson);
+    return responseJson;
   }
-  acessoFetch()
-  console.log("Enviado")
-  };
+  acessoFetch();
+};
 
 function Copyright() {
   return (
     <Typography variant="body2" color="textSecondary" align="center">
-      {"Todos direitos reservados © "}
+      {"Todos os direitos reservados © "}
       <Link color="inherit" href="">
         ConvergenceDev
       </Link>{" "}
@@ -86,23 +78,51 @@ const useStyles = makeStyles((theme) => ({
 export default function SignUp() {
   const classes = useStyles();
 
+  const [estados, setEstados] = useState([]);
+  const [cidades, setCidades] = useState([]);
+  const [selecionaEstado, setSelecionaEstado] = useState("");
+
+  useEffect( () => {
+    async function consultaEstados() {
+      let response = await fetch("http://localhost:8000/api/cep/estados");
+      let respostaJson = await response.json();
+      respostaJson = await respostaJson.sort((a, b) => (a.name > b.name ? 1 : -1));
+      setEstados(respostaJson);
+  }
+  consultaEstados();
+  }, []);
+
+  const onChangeState = (event) => {
+    setSelecionaEstado(event.target.value)
+  };
+
+  useEffect( () => {
+    async function consultaCidades() {
+      let response = await fetch(`http://localhost:8000/api/cep/cidade/${selecionaEstado}`)
+      let respostaJson = await response.json();
+      respostaJson = await respostaJson.sort((a, b) => (a.name > b.name ? 1 : -1));
+      setCidades(respostaJson);
+    }
+  consultaCidades();
+  }, [selecionaEstado]);
+
   return (
-    <Container component="main" maxWidth="xs">
+    <Container component="main" maxWidth="md">
       <CssBaseline />
       <div className={classes.paper}>
         <Typography component="h1" variant="h5">
           Registro
         </Typography>
-        <form className={classes.form} noValidate>
+        <form className={classes.form} id="myForm" noValidate>
           <Grid container spacing={2}>
             <Grid item xs={12}>
               <TextField
-                autoComplete="fname"
-                name="nomeCompleto"
+                autoComplete="name"
+                name="name"
                 variant="outlined"
                 required
                 fullWidth
-                id="nomecompleto"
+                id="name"
                 label="Nome completo"
                 autoFocus
               />
@@ -119,23 +139,25 @@ export default function SignUp() {
               />
             </Grid>
             <Grid item xs={6} sm={6}>
-              <FormControl variant="outlined" className={classes.formControl} fullWidth>
-                <InputLabel htmlFor="outlined-gender-native-simple">
-                  Gênero
-                </InputLabel>
+              <FormControl
+                variant="outlined"
+                className={classes.formControl}
+                fullWidth
+              >
+                <InputLabel htmlFor="gender">Gênero</InputLabel>
                 <Select
                   native
                   fullWidth
                   label="Gênero"
                   inputProps={{
-                    name: "genero",
-                    id: "outlined-gender-native-simple",
+                    name: "gender",
+                    id: "gender",
                   }}
                 >
                   <option aria-label="Nenhum" value="" />
-                  <option value={'feminino'}>Feminino</option>
-                  <option value={'masculino'}>Masculino</option>
-                  <option value={'outros'}>Outros</option>
+                  <option value={"f"}>Feminino</option>
+                  <option value={"m"}>Masculino</option>
+                  <option value={"o"}>Outros</option>
                 </Select>
               </FormControl>
             </Grid>
@@ -167,11 +189,23 @@ export default function SignUp() {
                 variant="outlined"
                 required
                 fullWidth
-                name="addressname"
+                name="password_confirmation"
+                label="Confirme a senha"
+                type="password"
+                id="password_confirmation"
+                autoComplete="password_confirmation"
+              />
+            </Grid>
+            <Grid item xs={12}>
+              <TextField
+                variant="outlined"
+                required
+                fullWidth
+                name="address_name"
                 label="Nome do Endereço"
                 type="text"
-                id="addressname"
-                autoComplete="addressname"
+                id="address_name"
+                autoComplete="address_name"
               />
             </Grid>
             <Grid item xs={12}>
@@ -233,6 +267,53 @@ export default function SignUp() {
                 id="complement"
                 autoComplete="complement"
               />
+            </Grid>
+            <Grid item xs={4} sm={4}>
+              <FormControl
+                variant="outlined"
+                className={classes.formControl}
+                fullWidth
+              >
+                <InputLabel htmlFor="estado_id">Estado</InputLabel>
+                <Select
+                  native
+                  fullWidth
+                  label="Estado"
+                  inputProps={{
+                    name: "estado_id",
+                    id: "estado_id",
+                  }}
+                  onChange={ event => onChangeState(event)}
+                >
+                  <option aria-label="None" value="" />
+                  { estados.map( (estado) => (
+                     <option value={estado.id} key={estado.id}>{estado.name.toUpperCase()}</option>
+                  ))};
+                </Select>
+              </FormControl>
+            </Grid>
+            <Grid item xs={6} sm={4}>
+              <FormControl
+                variant="outlined"
+                className={classes.formControl}
+                fullWidth
+              >
+                <InputLabel htmlFor="cidade">Cidade</InputLabel>
+                <Select
+                  native
+                  fullWidth
+                  label="Cidade"
+                  inputProps={{
+                    name: "cidade",
+                    id: "cidade",
+                  }}
+                >
+                  <option aria-label="None" value=""/>
+                  { cidades.map( (cidade) => (
+                     <option value={cidade.id} key={cidade.id}>{cidade.name}</option>
+                  ))};
+                </Select>
+              </FormControl>
             </Grid>
             <Grid item xs={12}>
               <FormControlLabel

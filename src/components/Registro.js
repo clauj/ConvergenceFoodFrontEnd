@@ -12,6 +12,7 @@ import Typography from "@material-ui/core/Typography";
 import { makeStyles } from "@material-ui/core/styles";
 import Container from "@material-ui/core/Container";
 import { FormControl, InputLabel, Select } from "@material-ui/core";
+import api from '../service/api';
 
 const enviarForm = (event) => {
   event.preventDefault();
@@ -81,12 +82,18 @@ export default function SignUp() {
   const [estados, setEstados] = useState([]);
   const [cidades, setCidades] = useState([]);
   const [selecionaEstado, setSelecionaEstado] = useState("");
+  const [cep,setCep] = useState('');
+
+  const [logradouro, setLogradouro] = useState('');
+  const [bairro, setBairro] = useState('');
+  const [estado, setEstado] = useState('');
+  const [cidade, setCidade] = useState('');
 
   useEffect( () => {
     async function consultaEstados() {
       let response = await fetch("http://localhost:8000/api/cep/estados");
       let respostaJson = await response.json();
-      respostaJson = await respostaJson.sort((a, b) => (a.name > b.name ? 1 : -1));
+      respostaJson =  respostaJson.sort((a, b) => (a.name > b.name ? 1 : -1));
       setEstados(respostaJson);
   }
   consultaEstados();
@@ -98,13 +105,31 @@ export default function SignUp() {
 
   useEffect( () => {
     async function consultaCidades() {
-      let response = await fetch(`http://localhost:8000/api/cep/cidade/${selecionaEstado}`)
+      let response = await fetch(`https://servicodados.ibge.gov.br/api/v1/localidades/estados/${selecionaEstado}/distritos`);
       let respostaJson = await response.json();
-      respostaJson = await respostaJson.sort((a, b) => (a.name > b.name ? 1 : -1));
+      respostaJson = respostaJson.sort((a, b) => (a.nome > b.nome ? 1 : -1));
       setCidades(respostaJson);
+      console.log('CIDADES',respostaJson)
     }
   consultaCidades();
   }, [selecionaEstado]);
+
+
+  useEffect(() => {
+    async function getCep(){
+      if(cep.length === 8) {
+        const {data: {viaCep}} = await api.post('/api/cep', {
+          cep,
+        });
+        setLogradouro(viaCep.logradouro);
+        setBairro(viaCep.bairro);
+        setSelecionaEstado(viaCep.uf)
+        setCidade(viaCep.localidade);
+      }
+    }
+    getCep();
+  },[cep]);
+  
 
   return (
     <Container component="main" maxWidth="md">
@@ -210,6 +235,10 @@ export default function SignUp() {
             </Grid>
             <Grid item xs={12}>
               <TextField
+                inputProps={{
+                  maxLength: 8,
+                }}
+                onChange={e => setCep(e.target.value)}
                 variant="outlined"
                 required
                 fullWidth
@@ -225,11 +254,14 @@ export default function SignUp() {
                 variant="outlined"
                 required
                 fullWidth
+                value={logradouro}
+                onChange={e => setLogradouro(e.target.value)}
                 name="address"
                 label="Logradouro"
                 type="text"
                 id="address"
                 autoComplete="address"
+                disabled={cep && cep.length === 8}
               />
             </Grid>
             <Grid item xs={4}>
@@ -251,9 +283,12 @@ export default function SignUp() {
                 fullWidth
                 name="district"
                 label="Bairro"
+                value={bairro}
+                onChange={e => setBairro(e.target.value)}
                 type="text"
                 id="district"
                 autoComplete="district"
+                disabled={cep && cep.length === 8}
               />
             </Grid>
             <Grid item xs={12}>
@@ -283,11 +318,13 @@ export default function SignUp() {
                     name: "estado_id",
                     id: "estado_id",
                   }}
+                  value={selecionaEstado}
                   onChange={ event => onChangeState(event)}
+                  disabled={cep && cep.length === 8}
                 >
                   <option aria-label="None" value="" />
-                  { estados.map( (estado) => (
-                     <option value={estado.id} key={estado.id}>{estado.name.toUpperCase()}</option>
+                  {estados.map((estado) => (
+                     <option value={estado.uf} key={estado.id}>{estado.name.toUpperCase()}</option>
                   ))};
                 </Select>
               </FormControl>
@@ -298,19 +335,17 @@ export default function SignUp() {
                 className={classes.formControl}
                 fullWidth
               >
-                <InputLabel htmlFor="cidade">Cidade</InputLabel>
+                <InputLabel htmlFor="cidade_id">Cidade</InputLabel>
                 <Select
                   native
                   fullWidth
+                  onChange={e => setCidade(e.target.value)}
                   label="Cidade"
-                  inputProps={{
-                    name: "cidade",
-                    id: "cidade",
-                  }}
+                  value={cidade}
+                  disabled={cep && cep.length === 8}
                 >
-                  <option aria-label="None" value=""/>
-                  { cidades.map( (cidade) => (
-                     <option value={cidade.id} key={cidade.id}>{cidade.name}</option>
+                  {cidades.map((cidade) => (
+                      <option value={cidade.nome} key={cidade.id}>{cidade.nome}</option>
                   ))};
                 </Select>
               </FormControl>

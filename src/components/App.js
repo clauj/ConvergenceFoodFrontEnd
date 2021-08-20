@@ -1,12 +1,9 @@
 import React from 'react'
-import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import { ThemeProvider } from '@material-ui/styles';
 import { red } from '@material-ui/core/colors';
 import { createTheme } from '@material-ui/core/styles';
 import Header from './Header'
-import Registro from './Registro'
-import Home from './Home'
-
+import GlobalRoutes from '../routes'
 const theme = createTheme({
   palette: {
     primary: {
@@ -20,18 +17,12 @@ const theme = createTheme({
   },
 });
 
-const App = () => {
-  return (
-    <ThemeProvider theme={theme}>
-      <Header />
-      <BrowserRouter>
-        <Routes>
-          <Route path="/" element={<Home />} />
-          <Route path="registrar" element={<Registro />} />
-        </Routes>
-      </BrowserRouter>
-    </ThemeProvider>
-  )
-}
+
+const App = () => (
+  <ThemeProvider theme={theme}>
+    <Header />
+    <GlobalRoutes/>
+  </ThemeProvider>
+)
 
 export default App;

@@ -1,13 +1,12 @@
 import React from 'react'
-import { Route , Routes } from 'react-router-dom';
-import Registro from '../components/Registro'
+import { Route , Switch } from 'react-router-dom';
 import Painel from '../components/Painel'
 
 const AppRoutes = () => {
   return (
-    <Routes>
-        <Route path="/painel" element={<Painel />} />
-    </Routes>
+    <Switch>
+        <Route path="/painel" component={<Painel />} />
+    </Switch>
   )
 }
 

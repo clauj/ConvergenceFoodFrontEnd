@@ -14,6 +14,7 @@ import Container from "@material-ui/core/Container";
 import { FormControl, InputLabel, Select } from "@material-ui/core";
 import api from "../service/api";
 import cleanText from "../utils/cleanText";
+import { useHistory } from "react-router-dom";
 
 function Copyright() {
   return (
@@ -50,7 +51,8 @@ const useStyles = makeStyles((theme) => ({
 
 export default function SignUp() {
   const classes = useStyles();
-  // const history = useHistory();
+  const history = useHistory();
+
   const [estados, setEstados] = useState([]);
   const [cidades, setCidades] = useState([]);
   const [selecionaEstado, setSelecionaEstado] = useState("");
@@ -74,6 +76,7 @@ export default function SignUp() {
   const [formNumber, setFormNumber] = useState("");
   const [formComplement, setFormComplement] = useState("");
 
+
   useEffect(() => {
     async function consultaEstados() {
       let response = await fetch("http://localhost:8000/api/cep/estados");
@@ -85,9 +88,12 @@ export default function SignUp() {
   }, []);
 
   const onChangeState = (event) => {
+
     const estadoid = estados.filter((item) => item.uf === event.target.value);
     setSelecionaEstado(event.target.value);
+    console.log(`Antes: ${estadoParaApiGuilherme}`)
     setEstadoParaApiGuilherme(estadoid[0].id);
+    console.log(`Depois: ${estadoParaApiGuilherme}`)
   };
 
   useEffect(() => {
@@ -139,26 +145,26 @@ export default function SignUp() {
 
     var formData = new FormData();
 
-    formData.append("name", formName);
-    formData.append("email", formEmail);
-    formData.append("password", formPassword);
-    formData.append("password_confirmation", formPasswordConfirmation);
-    formData.append("cpf", formCpf);
-    formData.append("gender", formGender);
-    formData.append("address_name", formAddressName);
-    formData.append("cep", formCep);
-    formData.append("address", logradouro);
-    formData.append("district", bairro);
-    formData.append("number", formNumber);
-    formData.append("complement", formComplement);
-    formData.append("estado_id", estadoParaApiGuilherme);
-    formData.append("cidade_id", selectedCidade[0].id);
+     formData.append("name", formName);
+     formData.append("email", formEmail);
+     formData.append("password", formPassword);
+     formData.append("password_confirmation", formPasswordConfirmation);
+     formData.append("cpf", formCpf);
+     formData.append("gender", formGender);
+     formData.append("address_name", formAddressName);
+     formData.append("cep", formCep);
+     formData.append("address", logradouro);
+     formData.append("district", bairro);
+     formData.append("number", formNumber);
+     formData.append("complement", formComplement);
+     formData.append("estado_id", estadoParaApiGuilherme);
+     formData.append("cidade_id", selectedCidade[0].id);
 
     const responseNovo = await api.post(
       "http://localhost:8000/api/auth/register",
       formData
     );
-    console.log(responseNovo);
+    sessionStorage.token = responseNovo.data.token;
   };
 
   return (
@@ -432,7 +438,7 @@ export default function SignUp() {
           </Button>
           <Grid container justifyContent="flex-end">
             <Grid item>
-              <Link href="#" variant="body2">
+              <Link href="/login" variant="body2">
                 Já tem uma conta? Clique para logar-se!
               </Link>
             </Grid>

@@ -1,9 +1,11 @@
-import React from 'react'
-import { ThemeProvider } from '@material-ui/styles';
-import { red } from '@material-ui/core/colors';
-import { createTheme } from '@material-ui/core/styles';
-import Header from './Header'
-import GlobalRoutes from '../routes'
+import React from "react";
+import { ThemeProvider } from "@material-ui/styles";
+import { red } from "@material-ui/core/colors";
+import { createTheme } from "@material-ui/core/styles";
+import Header from "./Header";
+import GlobalRoutes from "../routes";
+import {UserStorage} from "../context/UserContext";
+
 const theme = createTheme({
   palette: {
     primary: {
@@ -12,17 +14,17 @@ const theme = createTheme({
     },
     secondary: {
       // This is green.A700 as hex.
-      main: '#11cb5f',
+      main: "#11cb5f",
     },
   },
 });
 
-
 const App = () => (
   <ThemeProvider theme={theme}>
-    <Header />
-    <GlobalRoutes/>
+    <UserStorage>
+      <GlobalRoutes />
+    </UserStorage>
   </ThemeProvider>
-)
+);
 
 export default App;

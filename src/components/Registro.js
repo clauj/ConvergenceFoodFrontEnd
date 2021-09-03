@@ -75,7 +75,7 @@ export default function SignUp() {
   const [formDistrict, setFormDistrict] = useState("");
   const [formNumber, setFormNumber] = useState("");
   const [formComplement, setFormComplement] = useState("");
-
+  const [cidade_id, setCidade_id] = useState(0);
 
   useEffect(() => {
     async function consultaEstados() {
@@ -88,12 +88,9 @@ export default function SignUp() {
   }, []);
 
   const onChangeState = (event) => {
-
     const estadoid = estados.filter((item) => item.uf === event.target.value);
     setSelecionaEstado(event.target.value);
-    console.log(`Antes: ${estadoParaApiGuilherme}`)
     setEstadoParaApiGuilherme(estadoid[0].id);
-    console.log(`Depois: ${estadoParaApiGuilherme}`)
   };
 
   useEffect(() => {
@@ -104,7 +101,6 @@ export default function SignUp() {
       let respostaJson = await response.json();
       respostaJson = respostaJson.sort((a, b) => (a.nome > b.nome ? 1 : -1));
       setCidades(respostaJson);
-      console.log("CIDADES", respostaJson);
     }
     consultaCidades();
   }, [selecionaEstado]);
@@ -112,59 +108,61 @@ export default function SignUp() {
   useEffect(() => {
     async function getCep() {
       if (cep.length === 8) {
-        const {
-          data: { viaCep },
-        } = await api.post("/api/cep", {
+        const {data: { viaCep }} = await api.post("/api/cep", {
           cep,
         });
         setLogradouro(viaCep.logradouro);
         setBairro(viaCep.bairro);
         setSelecionaEstado(viaCep.uf);
         setCidade(viaCep.localidade);
+
+        const estadoid = estados.filter((item) => item.uf === viaCep.uf);
+        setEstadoParaApiGuilherme(estadoid[0].id);
       }
     }
     getCep();
-  }, [cep]);
+  }, [cep, estados]);
+
+  useEffect(() => {
+    async function getCityId () {
+      const response = await api.get(`http://localhost:8000/api/cep/cidade/${estadoParaApiGuilherme}`);
+      const formatedCidade = cleanText(cidade);
+      const cityId = response.data.filter(
+        (city) => city.name.toLowerCase() === formatedCidade
+      );
+      setCidade_id(cityId[0]?.id || 0)
+    }
+    getCityId();
+  },[cidade, estadoParaApiGuilherme]);
+
 
   const enviarForm = async (event) => {
     event.preventDefault();
+    
+    if(formPassword !== formPasswordConfirmation) return alert('Asasas');
 
-    // Chamar a api de cidades passando o state SELECIONAESTADO
-    const { data } = await api.get(
-      `http://localhost:8000/api/cep/cidade/${estadoParaApiGuilherme}`
-    );
 
-    const formatedCidade = cleanText(cidade);
+    const user = {
+      name: formName,
+      email: formEmail,
+      password: formPassword,
+      password_confirmation: formPasswordConfirmation,
+      cpf: formCpf,
+      gender: formGender,
+      address_name: formAddressName,
+      cep: formCep,
+      address: logradouro,
+      district: bairro,
+      number: formNumber,
+      complement:formComplement,
+      estado_id: estadoParaApiGuilherme,
+      cidade_id,
+    }
 
-    const selectedCidade = data.filter(
-      (city) => city.name.toLowerCase() === formatedCidade
-    );
+    if(!user.complement) delete user.complement;
 
-    var configHeaders = new Headers();
-    configHeaders.append("Accept", "application/json");
-
-    var formData = new FormData();
-
-     formData.append("name", formName);
-     formData.append("email", formEmail);
-     formData.append("password", formPassword);
-     formData.append("password_confirmation", formPasswordConfirmation);
-     formData.append("cpf", formCpf);
-     formData.append("gender", formGender);
-     formData.append("address_name", formAddressName);
-     formData.append("cep", formCep);
-     formData.append("address", logradouro);
-     formData.append("district", bairro);
-     formData.append("number", formNumber);
-     formData.append("complement", formComplement);
-     formData.append("estado_id", estadoParaApiGuilherme);
-     formData.append("cidade_id", selectedCidade[0].id);
-
-    const responseNovo = await api.post(
-      "http://localhost:8000/api/auth/register",
-      formData
-    );
-    sessionStorage.token = responseNovo.data.token;
+    await api.post("/api/auth/register", user);
+    history.push('/login')
   };
 
   return (
@@ -234,7 +232,7 @@ export default function SignUp() {
                 required
                 fullWidth
                 id="email"
-                label="Email"
+                label="E-mail"
                 name="email"
                 autoComplete="email"
                 onChange={({ target }) => setFormEmail(target.value)}
@@ -314,7 +312,7 @@ export default function SignUp() {
                 type="text"
                 id="address"
                 autoComplete="address"
-                // disabled={cep && cep.length === 8}
+                disabled={cep && cep.length === 8}
               />
             </Grid>
             <Grid item xs={4}>
@@ -323,7 +321,7 @@ export default function SignUp() {
                 required
                 fullWidth
                 name="number"
-                label="Numero"
+                label="Número"
                 type="number"
                 id="number"
                 autoComplete="number"
@@ -345,7 +343,7 @@ export default function SignUp() {
                 type="text"
                 id="district"
                 autoComplete="district"
-                // disabled={cep && cep.length === 8}
+                disabled={cep && cep.length === 8}
               />
             </Grid>
             <Grid item xs={12}>
@@ -378,7 +376,7 @@ export default function SignUp() {
                   }}
                   value={selecionaEstado}
                   onChange={(event) => onChangeState(event)}
-                  // disabled={cep && cep.length === 8}
+                  disabled={cep && cep.length === 8}
                 >
                   <option aria-label="None" value="" />
                   {estados.map((estado) => (
@@ -407,7 +405,7 @@ export default function SignUp() {
                     name: "cidade_id",
                     id: "cidade_id",
                   }}
-                  // disabled={cep && cep.length === 8}
+                  disabled={cep && cep.length === 8}
                 >
                   <option aria-label="None" value="" />
                   {cidades.map((cidade) => (

@@ -2,7 +2,6 @@ import React from "react";
 import { ThemeProvider } from "@material-ui/styles";
 import { red } from "@material-ui/core/colors";
 import { createTheme } from "@material-ui/core/styles";
-import Header from "./Header";
 import GlobalRoutes from "../routes";
 import {UserStorage} from "../context/UserContext";
 

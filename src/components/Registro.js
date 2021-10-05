@@ -15,6 +15,8 @@ import { FormControl, InputLabel, Select } from "@material-ui/core";
 import api from "../service/api";
 import cleanText from "../utils/cleanText";
 import { useHistory } from "react-router-dom";
+// import Modal from '@mui/material/Modal';
+
 
 function Copyright() {
   return (
@@ -76,6 +78,10 @@ export default function SignUp() {
   const [formNumber, setFormNumber] = useState("");
   const [formComplement, setFormComplement] = useState("");
   const [cidade_id, setCidade_id] = useState(0);
+  const [erroCadastro, setErroCadastro] = useState("");
+  const [open, setOpen] = React.useState(false);
+  const handleOpen = () => setOpen(true);
+  const handleClose = () => setOpen(false);
 
   useEffect(() => {
     async function consultaEstados() {
@@ -161,12 +167,30 @@ export default function SignUp() {
 
     if(!user.complement) delete user.complement;
 
-    await api.post("/api/auth/register", user);
-    history.push('/login')
+      await api.post("/api/auth/register", user).catch((error) => Object.entries(error.response.data.errors)
+      .forEach((erro) => { setErroCadastro(erro[1]);  
+      }));
+      // history.push('/login');
+
   };
 
   return (
     <Container component="main" maxWidth="md">
+      {/* <Modal
+        open={open}
+        onClose={handleClose}
+        aria-labelledby="modal-modal-title"
+        aria-describedby="modal-modal-description"
+      >
+        <Box sx={style}>
+          <Typography id="modal-modal-title" variant="h6" component="h2">
+            Text in a modal
+          </Typography>
+          <Typography id="modal-modal-description" sx={{ mt: 2 }}>
+            Duis mollis, est non commodo luctus, nisi erat porttitor ligula.
+          </Typography>
+        </Box>
+      </Modal> */}
       <CssBaseline />
       <div className={classes.paper}>
         <Typography component="h1" variant="h5">
@@ -424,6 +448,7 @@ export default function SignUp() {
               />
             </Grid>
           </Grid>
+          <p>{erroCadastro}</p>
           <Button
             type="submit"
             fullWidth

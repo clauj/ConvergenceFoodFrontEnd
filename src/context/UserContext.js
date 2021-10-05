@@ -31,6 +31,7 @@ export const UserStorage = ({ children }) => {
 
     try {
       setLoading(true);
+      console.log("Carregando: " + loading)
       const {
         data: { token, user },
       } = await api.post("/api/auth/login", loginForm);

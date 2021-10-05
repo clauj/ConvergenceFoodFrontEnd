@@ -4,14 +4,8 @@ import { Route, Redirect } from "react-router-dom";
 
 const ProtectedRoute = (props) => {
   const { login } = useContext(UserContext);
-
-  console.log("Login: " + login);
-
-  if (login) {
-    return <Route {...props} />;
-  } else if (login === false) {
-    return <Redirect to="/login" />;
-  }
+  if (!login) return <Redirect to='/login'></Redirect>
+     return <Route {...props} />
 };
 
 export default ProtectedRoute;

@@ -17,19 +17,28 @@
     align-items: center;
 }
 
+.nav > h1 {
+    font-weight: 1000;
+    text-transform: uppercase;
+    color: #FC621A;
+}
+
 .login {
     padding: 5px;
     text-decoration: none;
     background-color: #FD5817;
     color: white;
+    border: none;
     border-radius: 0.2rem;
+    
 }
 
 .login:hover {
     padding: 5px;
     text-decoration: none;
-    background-color: #FD5817;
+    background-color: #ff743d;
     color: rgb(211, 211, 211);
+    cursor: pointer;
 }
 
 .vertCenter {

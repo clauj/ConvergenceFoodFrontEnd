@@ -1,9 +1,9 @@
 import React from "react";
-import { ThemeProvider } from "@material-ui/styles";
 import { red } from "@material-ui/core/colors";
 import { createTheme } from "@material-ui/core/styles";
 import GlobalRoutes from "../routes";
 import {UserStorage} from "../context/UserContext";
+import "../components/App.css"
 
 const theme = createTheme({
   palette: {
@@ -19,11 +19,9 @@ const theme = createTheme({
 });
 
 const App = () => (
-  <ThemeProvider theme={theme}>
     <UserStorage>
       <GlobalRoutes />
     </UserStorage>
-  </ThemeProvider>
 );
 
 export default App;

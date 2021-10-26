@@ -12,7 +12,7 @@ const Footer = () => {
 
   return (
     <div className={styles.wrapper}>
-      <div className={styles.container}>
+      <div className={`${styles.container} container`}>
         <Logo></Logo>
         <div className={styles.social}>
           <ul>

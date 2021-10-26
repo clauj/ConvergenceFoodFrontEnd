@@ -6,7 +6,8 @@ import { Link } from 'react-router-dom';
 import styles from './Header.module.css'
 import { UserContext } from '../context/UserContext';
 import { useHistory } from "react-router-dom";
-import ModalLogin from './ModalLogin';
+import ModalLogin from './modals/ModalLogin';
+import SearchIcon from '@mui/icons-material/Search';
 
 const Header = () => {
 
@@ -15,7 +16,11 @@ const Header = () => {
     const [openModal, setOpenModal] = useState(false);
     const [buttonLogin, setButtonLogin] = useState(true);
 
-    console.log(data);
+    const handleSearch = (event) => {
+        event.preventDefault();
+        console.log("Pesquisar")
+    }
+
     const handleLogout = () => {
         userLogout();
         setOpenModal(false);
@@ -34,20 +39,26 @@ const Header = () => {
 
     return (
         <header className={styles.header}>
-            <nav className={styles.nav}>
+            <div className={styles.nav}>
                 <Link to="/" aria-label="">
-                    <Logo />
+                    <Logo className={styles.logo} />
                 </Link>
-                <h1>ConvergenceFood</h1>
-                <div className={styles.vertCenter}>
+                <div className={styles.searchBar}>
+                    <input type="text" id="search-bar" name="search-bar" placeholder="Pesquisar"></input>
+                    <SearchIcon className={styles.searchIcon} onClick={handleSearch} />
+                </div>
+                <div className={styles.addressSection}>
+                    <p>Entregar em:</p>
+                    <p className={styles.addressFav}>Rua XXXX</p>
+                </div>
+                <div className={styles.loggedArea}>
+                    {login && <ShoppingCartIcon className={styles.cart} onClick={handleCart}/>}
                     {login === false && <button onClick={handleOpenModal} className={styles.login}>Login</button>}
                     {login && <Link to='/minhaconta' className={styles.login}>{data.name}</Link>}
-                    {/* <Link to={login ? '/minhaconta' : '/login'} className={styles.login}>{login ? data.name : 'Login'}</Link> */}
                     {login === false && openModal === true && <ModalLogin closeModal={() => setOpenModal(false)} />}
-                    {login && <ExitToAppIcon onClick={handleLogout}/>}
-                    {login && <ShoppingCartIcon onClick={handleCart}/>}
+                    {login && <ExitToAppIcon className={styles.logout} onClick={handleLogout}/>}
                 </div>
-            </nav>
+            </div>
         </header>
     )
 }

@@ -34,7 +34,7 @@ export const UserStorage = ({ children }) => {
       console.log("Carregando: " + loading)
       const {
         data: { token, user },
-      } = await api.post("/api/auth/login", loginForm);
+      } = await api.post("auth/login", loginForm);
       localStorage.setItem("@convergencefood:token", token);
       localStorage.setItem("@convergencefood:user", JSON.stringify(user));
       setData(user);
@@ -61,7 +61,7 @@ export const UserStorage = ({ children }) => {
         },
       };
 
-      await api.post("/api/auth/logout", {}, config);
+      await api.post("auth/logout", {}, config);
       setData({});
       console.log("Disparou função")
       console.log(data)

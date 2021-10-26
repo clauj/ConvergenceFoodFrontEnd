@@ -2,7 +2,7 @@ import React from 'react'
 
 const Termos = () => {
     return (
-        <div>
+        <div className="container">
             1. Termos
 Ao acessar ao site convergencefood, concorda em cumprir estes termos de serviço, todas as leis e regulamentos aplicáveis ​​e concorda que é responsável pelo cumprimento de todas as leis locais aplicáveis. Se você não concordar com algum desses termos, está proibido de usar ou acessar este site. Os materiais contidos neste site são protegidos pelas leis de direitos autorais e marcas comerciais aplicáveis.
 

@@ -72,16 +72,20 @@ export default function SignUp() {
   const [formCpf, setFormCpf] = useState("");
   const [formGender, setFormGender] = useState("");
   const [formAddressName, setFormAddressName] = useState("");
-  const [formCep, setFormCep] = useState("");
   const [formAddress, setFormAddress] = useState("");
   const [formDistrict, setFormDistrict] = useState("");
+  const [formCep, setFormCep] = useState("");
   const [formNumber, setFormNumber] = useState("");
   const [formComplement, setFormComplement] = useState("");
   const [cidade_id, setCidade_id] = useState(0);
+  const [formCorporateName, setFormCorporateName] = useState("");
+  const [formTradingName, setFormTradingName] = useState("");
+  const [formCnpj, setFormCnpj] = useState("");
+  const [formPhone, setFormPhone] = useState("");
+  const [formEmailLoja, setFormEmailLoja] = useState("");
+  const [formRepresentanteLegal, setFormRepresentanteLegal] = useState("");
+  const [formRepresentanteLegalEmail, setFormRepresentanteLegalEmail] = useState("");
   const [erroCadastro, setErroCadastro] = useState("");
-  const [open, setOpen] = React.useState(false);
-  const handleOpen = () => setOpen(true);
-  const handleClose = () => setOpen(false);
 
   useEffect(() => {
     async function consultaEstados() {
@@ -114,7 +118,7 @@ export default function SignUp() {
   useEffect(() => {
     async function getCep() {
       if (cep.length === 8) {
-        const {data: { viaCep }} = await api.post("/api/cep", {
+        const {data: { viaCep }} = await api.post("cep", {
           cep,
         });
         setLogradouro(viaCep.logradouro);
@@ -131,7 +135,7 @@ export default function SignUp() {
 
   useEffect(() => {
     async function getCityId () {
-      const response = await api.get(`http://localhost:8000/api/cep/cidade/${estadoParaApiGuilherme}`);
+      const response = await api.get(`cep/cidade/${estadoParaApiGuilherme}`);
       const formatedCidade = cleanText(cidade);
       const cityId = response.data.filter(
         (city) => city.name.toLowerCase() === formatedCidade
@@ -163,11 +167,19 @@ export default function SignUp() {
       complement:formComplement,
       estado_id: estadoParaApiGuilherme,
       cidade_id,
+      corporate_name: formCorporateName,
+      trading_name: formTradingName,
+      cnpj: formCnpj,
+      phone: formPhone,
+      email_loja: formEmailLoja,
+      representante_legal: formRepresentanteLegal,
+      representante_legal_email: formRepresentanteLegalEmail,
+      admin: true,
     }
 
     if(!user.complement) delete user.complement;
 
-      await api.post("/api/auth/register", user).catch((error) => Object.entries(error.response.data.errors)
+      await api.post("auth/register/admin", user).catch((error) => Object.entries(error.response.data.errors)
       .forEach((erro) => { setErroCadastro(erro[1]);  
       }));
       // history.push('/login');
@@ -176,25 +188,10 @@ export default function SignUp() {
 
   return (
     <Container component="main" maxWidth="md">
-      {/* <Modal
-        open={open}
-        onClose={handleClose}
-        aria-labelledby="modal-modal-title"
-        aria-describedby="modal-modal-description"
-      >
-        <Box sx={style}>
-          <Typography id="modal-modal-title" variant="h6" component="h2">
-            Text in a modal
-          </Typography>
-          <Typography id="modal-modal-description" sx={{ mt: 2 }}>
-            Duis mollis, est non commodo luctus, nisi erat porttitor ligula.
-          </Typography>
-        </Box>
-      </Modal> */}
       <CssBaseline />
       <div className={classes.paper}>
         <Typography component="h1" variant="h5">
-          Registro
+          Registro Administrativo
         </Typography>
         <form className={classes.form} id="myForm" noValidate>
           <Grid container spacing={2}>
@@ -440,6 +437,101 @@ export default function SignUp() {
                   ;
                 </Select>
               </FormControl>
+            </Grid>
+            <Grid item xs={12}>
+              <TextField
+                variant="outlined"
+                required
+                fullWidth
+                name="corporate_name"
+                label="Nome Comercial"
+                type="text"
+                id="corporate_name"
+                autoComplete="corporate_name"
+                onChange={({ target }) => setFormCorporateName(target.value)}
+              />
+            </Grid>
+            <Grid item xs={12}>
+              <TextField
+                variant="outlined"
+                required
+                fullWidth
+                name="trading_name"
+                label="Nome Fantasia"
+                type="text"
+                id="trading_name"
+                autoComplete="trading_name"
+                onChange={({ target }) => setFormTradingName(target.value)}
+              />
+            </Grid>
+            <Grid item xs={12} sm={6}>
+              <TextField
+                variant="outlined"
+                required
+                inputProps={{
+                  maxLength: 14,
+                }}
+                fullWidth
+                id="cnpj"
+                label="CNPJ"
+                name="cnpj"
+                autoComplete="cnpj"
+                onChange={({ target }) => setFormCnpj(target.value)}
+              />
+            </Grid>
+            <Grid item xs={12} sm={6}>
+              <TextField
+                variant="outlined"
+                required
+                inputProps={{
+                  maxLength: 15,
+                }}
+                fullWidth
+                id="phone"
+                label="Telefone"
+                name="phone"
+                autoComplete="phone"
+                onChange={({ target }) => setFormPhone(target.value)}
+              />
+            </Grid>
+            <Grid item xs={12}>
+              <TextField
+                variant="outlined"
+                required
+                fullWidth
+                name="email_loja"
+                label="Email Loja"
+                type="text"
+                id="email_loja"
+                autoComplete="email_loja"
+                onChange={({ target }) => setFormEmailLoja(target.value)}
+              />
+            </Grid>
+            <Grid item xs={12}>
+              <TextField
+                variant="outlined"
+                required
+                fullWidth
+                name="representante_legal"
+                label="Representante Legal"
+                type="text"
+                id="representante_legal"
+                autoComplete="representante_legal"
+                onChange={({ target }) => setFormRepresentanteLegal(target.value)}
+              />
+            </Grid>
+            <Grid item xs={12}>
+              <TextField
+                variant="outlined"
+                required
+                fullWidth
+                name="representante_legal_email"
+                label="E-mail do Representante Legal"
+                type="text"
+                id="representante_legal_email"
+                autoComplete="representante_legal_email"
+                onChange={({ target }) => setFormRepresentanteLegalEmail(target.value)}
+              />
             </Grid>
             <Grid item xs={12}>
               <FormControlLabel

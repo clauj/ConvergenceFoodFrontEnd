@@ -1,0 +1,29 @@
+.container {
+    width: 207px;
+    height: 160px;
+    background-color: #E75C62;
+    border-radius: 1rem;
+    margin: 10px;
+    cursor: pointer;
+}
+
+.imgContainer {
+    width: 207px;
+    height: 140px;
+    border-top-left-radius:  1rem;
+    border-top-right-radius:  1rem;
+}
+
+.img {
+    width: 100%;
+    height: 100%;
+    border-top-left-radius:  1rem;
+    border-top-right-radius:  1rem;
+}
+
+.label {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: white;
+}

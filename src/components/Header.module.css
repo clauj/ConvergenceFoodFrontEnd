@@ -10,11 +10,44 @@
 .header {
     max-width: 1366px;
     margin-inline: auto;
+    height: 90px;
 }
 .nav {
     display: flex;
     justify-content: space-between;
     align-items: center;
+}
+
+.logo {
+    padding: 1rem 0;
+}
+
+.searchBar {
+    display: flex;
+    border: 2px solid #adadad;
+    border-radius: 1rem;
+    box-sizing: border-box;
+    align-items: center;
+}
+
+.searchBar > input {
+    border: none;
+    padding: 0.5rem;
+    border-radius: 1rem;
+    width: 450px;
+    font-size: 1rem;
+}
+
+.searchBar > input:focus {
+    outline: 0;
+}
+
+.searchIcon {
+    color: #FC621A;
+}
+
+.searchIcon:hover {
+    color: #8d1319;
 }
 
 .nav > h1 {
@@ -23,22 +56,54 @@
     color: #FC621A;
 }
 
+.addressSection {
+    display: flex;
+    flex-direction: column;
+    color: #929292;
+}
+
+.addressFav {
+    color: #000;
+}
+
+.loggedArea {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.cart {
+    padding: 0 1rem;
+    color: #E75C62;
+}
+
+.cart:hover {
+    color: #8d1319;
+}
+
 .login {
     padding: 5px;
     text-decoration: none;
-    background-color: #FD5817;
+    background-color: #E75C62;
     color: white;
     border: none;
     border-radius: 0.2rem;
-    
 }
 
 .login:hover {
     padding: 5px;
     text-decoration: none;
-    background-color: #ff743d;
-    color: rgb(211, 211, 211);
+    background-color: #8d1319;
     cursor: pointer;
+}
+
+.logout {
+    padding: 0 0.5rem;
+    color: #E75C62;
+}
+
+.logout:hover {
+    color: #8d1319;
 }
 
 .vertCenter {

@@ -1,11 +1,6 @@
 import React, { useState, useContext } from "react";
 import styles from "./ModalLogin.module.css";
-import Box from "@mui/material/Box";
-import Button from "@mui/material/Button";
-import Typography from "@mui/material/Typography";
-import Modal from "@mui/material/Modal";
-import { UserContext } from "../context/UserContext";
-import { useHistory } from "react-router";
+import { UserContext } from "../../context/UserContext";
 import CloseIcon from "@material-ui/icons/Close";
 
 const ModalLogin = ({ closeModal }) => {

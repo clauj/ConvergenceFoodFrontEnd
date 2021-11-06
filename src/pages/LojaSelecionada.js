@@ -3,7 +3,7 @@ import { useParams } from 'react-router-dom';
 
 const LojaSelecionada = () => {
 
-    const route = useParams();
+    let route = useParams();
     console.log(route);
 
     return (

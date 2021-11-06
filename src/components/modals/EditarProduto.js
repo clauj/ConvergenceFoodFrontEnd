@@ -1,10 +1,12 @@
 import React, { useState } from "react";
-import styles from "../modals/AdicionarLoja.module.css";
+import styles from "../modals/EditarLoja.module.css";
 import CloseIcon from "@material-ui/icons/Close";
 import api from "../../service/api";
 import { useHistory } from "react-router-dom";
 
-const AdicionarLoja = ({ closeModal, setLojasResponse }) => {
+const EditarLoja = ({ closeModal, setLojasResponse, loja }) => {
+
+  console.log(loja);
 
   const [corporateName, setCorporateName] = useState("");
   const [tradingName, setTradingName] = useState("");
@@ -85,7 +87,7 @@ const AdicionarLoja = ({ closeModal, setLojasResponse }) => {
     <div className={styles.backdrop}>
       <div className={styles.modal}>
         <div className={styles.titleBar}>
-          <p>Nova loja</p>
+          <p>{loja?.corporate_name}</p>
           <CloseIcon onClick={() => closeModal()} />
         </div>
         <form className={styles.form}>
@@ -94,6 +96,7 @@ const AdicionarLoja = ({ closeModal, setLojasResponse }) => {
               type="text"
               id="corporate_name"
               name="corporate_name"
+              defaultValue={loja?.corporate_name}
               onChange={(event) => setCorporateName(event.target.value)}
             />
             <label htmlFor="trading_name">Nome Fantasia</label>
@@ -101,6 +104,7 @@ const AdicionarLoja = ({ closeModal, setLojasResponse }) => {
               type="text"
               id="trading_name"
               name="trading_name"
+              defaultValue={loja?.trading_name}
               onChange={(event) => setTradingName(event.target.value)}
             />
             <label htmlFor="cnpj">CNPJ</label>
@@ -108,6 +112,7 @@ const AdicionarLoja = ({ closeModal, setLojasResponse }) => {
               type="number"
               id="cnpj"
               name="cnpj"
+              defaultValue={loja?.cnpj}
               maxLength="14"
               onChange={(event) => setCnpj(event.target.value)}
             />
@@ -116,6 +121,7 @@ const AdicionarLoja = ({ closeModal, setLojasResponse }) => {
               type="text"
               id="representante_legal"
               name="representante_legal"
+              defaultValue={loja?.representante_legal}
               onChange={(event) => setRepresentanteLegal(event.target.value)}
             />
             <label htmlFor="representante_legal_email">
@@ -125,6 +131,7 @@ const AdicionarLoja = ({ closeModal, setLojasResponse }) => {
               type="email"
               id="representante_legal_email"
               name="representante_legal_email"
+              defaultValue={loja?.representante_legal_email}
               onChange={(event) =>
                 setRepresentanteLegalEmail(event.target.value)
               }
@@ -134,6 +141,7 @@ const AdicionarLoja = ({ closeModal, setLojasResponse }) => {
               type="text"
               id="address_name"
               name="address_name"
+              defaultValue={loja?.address_name}
               onChange={(event) => setAddressName(event.target.value)}
             />
             <label htmlFor="CEP">CEP</label>
@@ -141,6 +149,7 @@ const AdicionarLoja = ({ closeModal, setLojasResponse }) => {
               type="number"
               id="CEP"
               name="CEP"
+              defaultValue={loja?.address_name}
               onChange={(event) => setCep(event.target.value)}
             />
             <label htmlFor="address">Logradouro</label>
@@ -190,6 +199,7 @@ const AdicionarLoja = ({ closeModal, setLojasResponse }) => {
               type="text"
               id="phone"
               name="phone"
+              defaultValue={loja?.phone}
               onChange={(event) => setPhone(event.target.value)}
             />
             <label htmlFor="cel_phone">Celular</label>
@@ -204,6 +214,7 @@ const AdicionarLoja = ({ closeModal, setLojasResponse }) => {
               type="email"
               id="email_loja"
               name="email_loja"
+              defaultValue={loja?.email}
               onChange={(event) => setEmailLoja(event.target.value)}
             />
             <label htmlFor="web_link">Website</label>
@@ -211,16 +222,18 @@ const AdicionarLoja = ({ closeModal, setLojasResponse }) => {
               type="text"
               id="web_link"
               name="web_link"
+              defaultValue={loja?.website}
               onChange={(event) => setWebsite(event.target.value)}
             />
             <label htmlFor="photo">Logomarca</label>
+            <img src={loja.photo} alt={loja.corporate_name}></img>
             <input type="file" id="photo" name="photo" onChange={handleFile} />
             <button
               type="submit"
               className={styles.botao}
               onClick={handleSubmit}
             >
-              Criar
+              Salvar
             </button>
           {responseCriacaoLoja && <p>{responseCriacaoLoja}</p>}
           {responseError && <p>{responseError}</p>}
@@ -230,4 +243,4 @@ const AdicionarLoja = ({ closeModal, setLojasResponse }) => {
   );
 };
 
-export default AdicionarLoja;
+export default EditarLoja;

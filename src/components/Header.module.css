@@ -25,7 +25,7 @@
 .searchBar {
     display: flex;
     border: 2px solid #adadad;
-    border-radius: 1rem;
+    border-radius: 0.25rem;
     box-sizing: border-box;
     align-items: center;
 }

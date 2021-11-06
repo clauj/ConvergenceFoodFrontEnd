@@ -1,10 +1,10 @@
 import React, { useState } from "react";
-import styles from "../modals/AdicionarLoja.module.css";
+import styles from "../modals/AdicionarProduto.module.css";
 import CloseIcon from "@material-ui/icons/Close";
 import api from "../../service/api";
 import { useHistory } from "react-router-dom";
 
-const AdicionarLoja = ({ closeModal, setLojasResponse }) => {
+const AdicionarProduto = ({ closeModal, setProdutosResponse }) => {
 
   const [corporateName, setCorporateName] = useState("");
   const [tradingName, setTradingName] = useState("");
@@ -73,7 +73,7 @@ const AdicionarLoja = ({ closeModal, setLojasResponse }) => {
       const response = await api.post("loja/create", data, config);
       console.log(response);
       setResponseCriacaoLoja(response.data.message);
-      setLojasResponse(response);
+      setProdutosResponse(response);
       closeModal();
 
     } catch (error) {
@@ -230,4 +230,4 @@ const AdicionarLoja = ({ closeModal, setLojasResponse }) => {
   );
 };
 
-export default AdicionarLoja;
+export default AdicionarProduto;

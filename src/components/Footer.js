@@ -26,7 +26,7 @@ const Footer = () => {
           <NavLink to="/termos">Termos & Condições</NavLink>
         </div>
       </div>
-      <p className={styles.container}>
+      <p className={styles.copyright}>
         Todos direitos reservados - ConvergenceFood© {date.getFullYear()}
       </p>
     </div>

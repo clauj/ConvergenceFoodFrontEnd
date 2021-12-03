@@ -36,7 +36,7 @@
     cursor: pointer;
 }
 
-.container > div > ul > li:nth-child(2n) {
+.container > div > ul > li:not(:first-child) {
     margin-top: 0.5rem;
 }
 

@@ -12,6 +12,7 @@ const Lojas = () => {
   const [lojasResponse, setLojasResponse] = useState([]);
   const [modalAdicionarLoja, setModalAdicionarLoja] = useState(false);
   const [modalEditarLoja, setModalEditarLoja] = useState({});
+  const [id, setId] = useState(null);
 
   const token = window.localStorage.getItem("@convergencefood:token");
 
@@ -28,7 +29,6 @@ const Lojas = () => {
       };
 
       const { data } = await api.get("user", config);
-
       setLojasResponse(data.lojas);
     }
 
@@ -48,6 +48,7 @@ const Lojas = () => {
       console.log(`Deletou: ${id}`);
       const response = await api.delete(`loja/${id}`, config);
       console.log(response.data.message);
+      history.go(0);
     } catch (error) {
       console.log(error);
     }

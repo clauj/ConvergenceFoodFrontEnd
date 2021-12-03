@@ -25,7 +25,7 @@ const AdicionarLoja = ({ closeModal, setLojasResponse }) => {
   const [representanteLegalEmail, setRepresentanteLegalEmail] = useState(null);
   const [photo, setPhoto] = useState(null);
   const [responseCriacaoLoja, setResponseCriacaoLoja] = useState("");
-  const [responseError, setResponseError] = useState(null);
+  const [responseError, setResponseError] = useState([]);
 
   const handleFile = (event) => {
     console.log(event.target.files[0]);
@@ -71,13 +71,13 @@ const AdicionarLoja = ({ closeModal, setLojasResponse }) => {
 
     try {
       const response = await api.post("loja/create", data, config);
-      console.log(response);
       setResponseCriacaoLoja(response.data.message);
-      setLojasResponse(response);
+      setLojasResponse(response.data.lojas);
       closeModal();
 
     } catch (error) {
-      console.log(error)
+      setResponseError(Object.values(error.response.data.errors));
+      console.log(responseError);
     }
   };
 
@@ -223,7 +223,7 @@ const AdicionarLoja = ({ closeModal, setLojasResponse }) => {
               Criar
             </button>
           {responseCriacaoLoja && <p>{responseCriacaoLoja}</p>}
-          {responseError && <p>{responseError}</p>}
+          {responseError && responseError.map((item) => <p className={styles.error}>{item}</p>)}
         </form>
       </div>
     </div>

@@ -1,10 +1,11 @@
-import React, { useContext, useState } from 'react'
+import React, { useContext, useState, useEffect } from 'react'
 import { ReactComponent as Logo } from '../assets/logo.svg';
 import ExitToAppIcon from '@material-ui/icons/ExitToApp';
 import ShoppingCartIcon from '@material-ui/icons/ShoppingCart';
 import { Link } from 'react-router-dom';
 import styles from './Header.module.css'
 import { UserContext } from '../context/UserContext';
+import { CartContext } from '../context/CartContext';
 import { useHistory } from "react-router-dom";
 import ModalLogin from './modals/ModalLogin';
 import SearchIcon from '@mui/icons-material/Search';
@@ -15,6 +16,7 @@ const Header = () => {
     const history = useHistory();
     const [openModal, setOpenModal] = useState(false);
     const [buttonLogin, setButtonLogin] = useState(true);
+    const {cart} = useContext(CartContext);
 
     const handleSearch = (event) => {
         event.preventDefault();
@@ -52,7 +54,12 @@ const Header = () => {
                     <p className={styles.addressFav}>Rua XXXX</p>
                 </div>
                 <div className={styles.loggedArea}>
-                    {login && <ShoppingCartIcon className={styles.cart} onClick={handleCart}/>}
+                    {login && (
+                        <div>
+                            <ShoppingCartIcon className={styles.cart} onClick={handleCart}/>
+                            <p>{cart.quantidade}</p>
+                        </div>
+                    )}
                     {login === false && <button onClick={handleOpenModal} className={styles.login}>Login</button>}
                     {login && <Link to='/minhaconta' className={styles.login}>{data.name}</Link>}
                     {login === false && openModal === true && <ModalLogin closeModal={() => setOpenModal(false)} />}

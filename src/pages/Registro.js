@@ -17,20 +17,6 @@ import cleanText from "../utils/cleanText";
 import { useHistory } from "react-router-dom";
 // import Modal from '@mui/material/Modal';
 
-
-function Copyright() {
-  return (
-    <Typography variant="body2" color="textSecondary" align="center">
-      {"Todos os direitos reservados © "}
-      <Link color="inherit" href="">
-        ConvergenceDev
-      </Link>{" "}
-      {new Date().getFullYear()}
-      {"."}
-    </Typography>
-  );
-}
-
 const useStyles = makeStyles((theme) => ({
   paper: {
     marginTop: theme.spacing(8),
@@ -114,8 +100,10 @@ export default function SignUp() {
   useEffect(() => {
     async function getCep() {
       if (cep.length === 8) {
-        const {data: { viaCep }} = await api.post("cep", {
-          cep,
+        const cepString = cep.toString();
+        console.log(cepString);
+        const {data: { viaCep }} = await api.get("cep", {
+          cepString,
         });
         setLogradouro(viaCep.logradouro);
         setBairro(viaCep.bairro);
@@ -468,9 +456,6 @@ export default function SignUp() {
           </Grid>
         </form>
       </div>
-      <Box mt={5}>
-        <Copyright />
-      </Box>
     </Container>
   );
 }

@@ -2,8 +2,10 @@ import React from "react";
 import { red } from "@material-ui/core/colors";
 import { createTheme } from "@material-ui/core/styles";
 import GlobalRoutes from "../routes";
-import {UserStorage} from "../context/UserContext";
+import { UserStorage } from "../context/UserContext";
 import "../components/App.css"
+import { CartProvider } from "../context/CartContext";
+
 
 const theme = createTheme({
   palette: {
@@ -19,8 +21,11 @@ const theme = createTheme({
 });
 
 const App = () => (
+  
     <UserStorage>
+    <CartProvider>
       <GlobalRoutes />
+    </CartProvider>
     </UserStorage>
 );
 

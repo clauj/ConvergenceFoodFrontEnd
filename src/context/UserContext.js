@@ -22,6 +22,11 @@ export const UserStorage = ({ children }) => {
     if(token) return token;
     else return "";
   });
+  const [enderecos, setEnderecos] = useState(() => {
+    const enderecos = localStorage.getItem("@convergencefood:enderecos");
+    if(enderecos) return enderecos;
+    else return [];
+  });
 
   async function userLogin(email, password) {
     const loginForm = {
@@ -33,11 +38,13 @@ export const UserStorage = ({ children }) => {
       setLoading(true);
       console.log("Carregando: " + loading)
       const {
-        data: { token, user },
+        data: { token, user, enderecos },
       } = await api.post("auth/login", loginForm);
       localStorage.setItem("@convergencefood:token", token);
       localStorage.setItem("@convergencefood:user", JSON.stringify(user));
+      localStorage.setItem("@convergencefood:enderecos", JSON.stringify(enderecos));
       setData(user);
+      setEnderecos(enderecos);
       setLogin(true);
       setError("");
       setToken(token);
@@ -63,12 +70,12 @@ export const UserStorage = ({ children }) => {
 
       await api.post("auth/logout", {}, config);
       setData({});
-      console.log("Disparou função")
-      console.log(data)
       setLogin(false);
       setToken("");
       localStorage.removeItem("@convergencefood:token");
       localStorage.removeItem("@convergencefood:user");
+      localStorage.removeItem("@convergencefood:enderecos");
+      return <Redirect to="/" />
     } catch (error) {
       console.log(error);
     } finally {
@@ -77,7 +84,7 @@ export const UserStorage = ({ children }) => {
 
   return (
     <UserContext.Provider
-      value={{ userLogin, userLogout, data, login, loading, error }}
+      value={{ userLogin, userLogout, data, enderecos, login, loading, error, token }}
     >
       {children}
     </UserContext.Provider>

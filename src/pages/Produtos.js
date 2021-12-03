@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { useHistory, useParams } from "react-router";
+import { useParams, useHistory } from "react-router";
 import api from "../service/api";
 import styles from "../pages/Produtos.module.css";
 import EditIcon from "@mui/icons-material/Edit";
@@ -10,12 +10,12 @@ import EditarProduto from "../components/modals/EditarProduto";
 
 const Produtos = () => {
   const [produtosResponse, setProdutosResponse] = useState([]);
+  const [estoqueResponse, setEstoqueResponse] = useState([]);
   const [modalAdicionarProduto, setModalAdicionarProduto] = useState(false);
   const [modalEditarProduto, setModalEditarProduto] = useState({});
 
-  const token = window.localStorage.getItem("@convergencefood:token");
-
   const history = useHistory();
+  const token = window.localStorage.getItem("@convergencefood:token");
 
   const params = useParams();
 
@@ -32,36 +32,37 @@ const Produtos = () => {
       const { data } = await api.get(`produtos/${params.id}`, config);
 
       setProdutosResponse(data.produtos);
+      setEstoqueResponse(data);
     }
 
     fetchProdutos();
   }, [token]);
 
-  console.log(produtosResponse);
+  const handleDeleteProduto = async (id) => {
+    console.log("ID" + id);
+    let config = {
+      method: "delete",
+      headers: {
+        Accept: "application/json",
+        Authorization: `Bearer ${token}`,
+      },
+    };
 
-//   const handleDeleteProduto = async (id) => {
-//     let config = {
-//       method: "delete",
-//       headers: {
-//         Accept: "application/json",
-//         Authorization: `Bearer ${token}`,
-//       },
-//     };
+    try {
+      console.log(`Deletou: ${id}`);
+      const response = await api.delete(`produto/${id}`, config);
+      console.log(response.data.message);
+      history.go(0);
+    } catch (error) {
+      console.log(error);
+    }
 
-//     try {
-//       console.log(`Deletou: ${id}`);
-//       const response = await api.delete(`loja/${id}`, config);
-//       console.log(response.data.message);
-//     } catch (error) {
-//       console.log(error);
-//     }
-
-//     console.log(id);
-//   }
+    console.log(id);
+  }
   
-//   const handleLoja = (id) => {
-//     history.push(`/lojas/${id}`);
-//   };
+  // const handleLoja = (id) => {
+  //   history.push(`/lojas/${id}`);
+  // };
 
   return (
     <div className={`${styles.container} container`}>
@@ -76,8 +77,8 @@ const Produtos = () => {
         <ul>
           {produtosResponse.map((item) => (
             <li key={item.id}>
-              <p>
-                {item.corporate_name}
+              <p onClick={() => console.log(item.id)}>
+                {item.name}
               </p>
               <div className={styles.icons}>
                 <EditIcon
@@ -88,6 +89,7 @@ const Produtos = () => {
                 <DeleteForeverIcon
                   className={styles.icon}
                   id={item.id}
+                  onClick={() => handleDeleteProduto(item.id)}
                 ></DeleteForeverIcon>
               </div>
             </li>
@@ -98,6 +100,8 @@ const Produtos = () => {
         <AdicionarProduto
           closeModal={() => setModalAdicionarProduto(false)}
           setProdutosResponse={setProdutosResponse}
+          id={params.id}
+          produtosResponse={produtosResponse}
         />
       )}
       {modalEditarProduto?.id && (
@@ -105,6 +109,7 @@ const Produtos = () => {
           closeModal={() => setModalEditarProduto({})}
           setProdutosResponse={setProdutosResponse}
           produto={modalEditarProduto}
+          id={params.id}
         />
       )}
     </div>

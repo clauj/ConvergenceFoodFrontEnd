@@ -49,7 +49,7 @@
     font-size: 1.1rem;
 }
 
-.form > input {
+.form > input, .form > select {
     border: none;
     width: 20rem;
     padding: 0.2rem;

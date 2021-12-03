@@ -72,7 +72,7 @@ const EditarLoja = ({ closeModal, setLojasResponse, loja }) => {
     };
 
     try {
-      const response = await api.post("loja/create", data, config);
+      const response = await api.post(`loja/${loja.id}`, data, config);
       console.log(response);
       setResponseCriacaoLoja(response.data.message);
       setLojasResponse(response);

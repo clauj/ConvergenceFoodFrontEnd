@@ -7,6 +7,7 @@ import DeleteForeverIcon from "@mui/icons-material/DeleteForever";
 import AddCircleIcon from "@mui/icons-material/AddCircle";
 import AdicionarProduto from "../components/modals/AdicionarProduto";
 import EditarProduto from "../components/modals/EditarProduto";
+import PedidosLojas from '../pages/PedidosLojas'
 
 const Produtos = () => {
   const [produtosResponse, setProdutosResponse] = useState([]);
@@ -96,6 +97,7 @@ const Produtos = () => {
           ))}
         </ul>
       </div>
+      <PedidosLojas />
       {modalAdicionarProduto && (
         <AdicionarProduto
           closeModal={() => setModalAdicionarProduto(false)}

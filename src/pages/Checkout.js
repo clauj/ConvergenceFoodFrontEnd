@@ -180,7 +180,7 @@ const Checkout = () => {
       </div>
       <form className={styles.form}>
         <div>
-          <label htmlFor="metodos">Metodo de pagamento:</label>
+          <label htmlFor="metodos">Bandeira do Cartão:</label>
           <select name="metodos" id="metodos" onChange={(id) => handleMetodo(id)}>
             {metodosPagamento
               .sort((a, b) => (a.name > b.name ? 1 : -1))

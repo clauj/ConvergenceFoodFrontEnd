@@ -23,6 +23,7 @@ const Footer = () => {
           </ul>
         </div>
         <div className={styles.termos}>
+          <NavLink to="/assine">Assine já</NavLink>
           <NavLink to="/termos">Termos & Condições</NavLink>
         </div>
       </div>

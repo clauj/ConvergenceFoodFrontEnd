@@ -16,6 +16,7 @@ import Lojas from '../pages/Lojas';
 import LojaSelecionada from '../pages/LojaSelecionada';
 import Checkout from '../pages/Checkout';
 import Pedido from '../pages/Pedido';
+import Assinatura from '../pages/Assinatura';
 
 const GlobalRoutes = () => {
     return ( 
@@ -27,6 +28,7 @@ const GlobalRoutes = () => {
                     <Route path="/registrar" component={Registro} />
                     <Route path="/registrarloja" component={RegistroAdmin} />
                     <Route  path="/termos" component={Termos} />
+                    <Route  path="/assine" component={Assinatura} />
                     <ProtectedRoute exact path="/loja/:id" component={LojaSelecionada} />
                     <ProtectedRoute path="/produtos" component={Produtos} />
                     <ProtectedRoute exact path="/lojas" component={Lojas} />

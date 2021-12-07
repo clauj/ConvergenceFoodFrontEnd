@@ -23,6 +23,10 @@
     height: 2rem;
 }
 
+.termos {
+    display: flex;
+}
+
 .termos > a:hover {
     color: #5f5f5f;
 }

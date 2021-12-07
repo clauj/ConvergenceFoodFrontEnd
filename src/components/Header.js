@@ -12,11 +12,13 @@ import SearchIcon from '@mui/icons-material/Search';
 
 const Header = () => {
 
-    const { data, login, userLogout } = useContext(UserContext);
+    const { data, login, userLogout, enderecos } = useContext(UserContext);
     const history = useHistory();
     const [openModal, setOpenModal] = useState(false);
     const [buttonLogin, setButtonLogin] = useState(true);
     const {cart} = useContext(CartContext);
+
+    const endereco = JSON.parse(enderecos);
 
     const handleSearch = (event) => {
         event.preventDefault();
@@ -51,13 +53,13 @@ const Header = () => {
                 </div>
                 <div className={styles.addressSection}>
                     <p>Entregar em:</p>
-                    <p className={styles.addressFav}>Rua XXXX</p>
+                    <p className={styles.addressFav}>{endereco[0].address}, {endereco[0].number}</p>
                 </div>
                 <div className={styles.loggedArea}>
                     {login && (
-                        <div>
+                        <div className={styles.carrinho}>
                             <ShoppingCartIcon className={styles.cart} onClick={handleCart}/>
-                            <p>{cart.quantidade}</p>
+                            <p className={styles.amount}>{cart.quantidade}</p>
                         </div>
                     )}
                     {login === false && <button onClick={handleOpenModal} className={styles.login}>Login</button>}

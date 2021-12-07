@@ -1,0 +1,9 @@
+.pedidos {
+    margin: 1rem 0;
+}
+
+.pedido {
+    margin: 0.25rem 0;
+    padding: 0.25rem;
+    border: 0.1rem solid #000;
+}

@@ -4,7 +4,7 @@ import { CartContext } from "../context/CartContext";
 import api from "../service/api";
 import { useMercadopago } from "react-sdk-mercadopago";
 import { UserContext } from "../context/UserContext";
-import { useHistory} from 'react-router-dom';
+import { useHistory } from 'react-router-dom';
 
 const Checkout = () => {
   const [metodosPagamento, setMetodosPagamento] = useState([]);

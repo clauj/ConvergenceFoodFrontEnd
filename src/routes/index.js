@@ -26,7 +26,7 @@ const GlobalRoutes = () => {
                     <Route exact path="/" component={Home} />
                     <Route path="/login" component={Login} />
                     <Route path="/registrar" component={Registro} />
-                    <Route path="/registrarloja" component={RegistroAdmin} />
+                    <Route path="/registrar/plano" component={RegistroAdmin} />
                     <Route  path="/termos" component={Termos} />
                     <Route  path="/assine" component={Assinatura} />
                     <ProtectedRoute exact path="/loja/:id" component={LojaSelecionada} />

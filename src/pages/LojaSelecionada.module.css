@@ -1,0 +1,56 @@
+.titulo {
+    font-size: 3rem;
+}
+
+.lojas {
+    display: flex;
+    justify-content: space-evenly;
+}
+
+.loja {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    width: 200px;
+    box-shadow: #63636333 0px 2px 8px 0px;
+    border-radius: 0.25rem;
+    padding: 2.5rem 0.25rem;
+}
+
+.loja > p {
+    font-size: 1.25rem;
+}
+
+.loja > img {
+    width: 100%;
+}
+
+.loja > button {
+    font-size: 1rem;
+    padding: 0.5rem;
+    border: none;
+    background-color: #E75C62;
+    color: white;
+    cursor: pointer;
+    border-radius: 0.2rem;
+}
+
+.loja > button:hover {
+    color: #ececec;
+}
+
+.price {
+    background-color: #1fc51f;
+    color: white;
+    border-radius: 0.25rem;
+    padding: 0.25rem;
+    margin: 0.25rem;
+}
+
+.description {
+    border: 1px solid;
+    border-radius: 0.25rem;
+    padding: 0.25rem;
+    font-weight: 400;
+}

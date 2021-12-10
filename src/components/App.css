@@ -1,0 +1,8 @@
+.container {
+    max-width: 1366px;
+    margin-inline: auto;
+}
+
+input[type="radio"] {
+    cursor: pointer;
+}

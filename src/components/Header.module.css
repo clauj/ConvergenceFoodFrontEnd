@@ -1,0 +1,138 @@
+@import url('https://fonts.googleapis.com/css2?family=Roboto:wght@500&display=swap');
+
+* {
+    margin: 0px;
+    padding: 0px;
+    font-family: Roboto;
+    font-weight: 500;
+}
+
+.header {
+    max-width: 1366px;
+    margin-inline: auto;
+    height: 90px;
+}
+.nav {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.logo {
+    padding: 1rem 0;
+}
+
+.searchBar {
+    display: flex;
+    border: 2px solid #adadad;
+    border-radius: 0.25rem;
+    box-sizing: border-box;
+    align-items: center;
+}
+
+.searchBar > input {
+    border: none;
+    padding: 0.5rem;
+    border-radius: 1rem;
+    width: 450px;
+    font-size: 1rem;
+}
+
+.searchBar > input:focus {
+    outline: 0;
+}
+
+.searchIcon {
+    color: #FC621A;
+}
+
+.searchIcon:hover {
+    color: #8d1319;
+}
+
+.nav > h1 {
+    font-weight: 1000;
+    text-transform: uppercase;
+    color: #FC621A;
+}
+
+.addressSection {
+    display: flex;
+    flex-direction: column;
+    color: #929292;
+}
+
+.addressFav {
+    color: #000;
+}
+
+.loggedArea {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.cart {
+    padding: 0 1rem;
+    color: #E75C62;
+    position: relative;
+}
+
+.cart:hover {
+    color: #8d1319;
+}
+
+.login {
+    padding: 5px;
+    text-decoration: none;
+    background-color: #E75C62;
+    color: white;
+    border: none;
+    border-radius: 0.2rem;
+}
+
+.login:hover {
+    padding: 5px;
+    text-decoration: none;
+    background-color: #8d1319;
+    cursor: pointer;
+}
+
+.logout {
+    padding: 0 0.5rem;
+    color: #E75C62;
+}
+
+.logout:hover {
+    color: #8d1319;
+}
+
+.vertCenter {
+    display: flex;
+    align-items: center;
+}
+
+.carrinho {
+    display: flex;
+    position: relative;
+}
+
+.amount {
+    position: absolute;
+    right: 5px;
+    top: -5px;
+    background-color: #8d1319;
+    padding: 0.15rem;
+    border-radius: 50%;
+    color: white;
+}
+
+.assinaturaPendente {
+    background-color: rgb(253, 158, 6);
+    color: #ffff;
+    font-weight: bold;
+    border: none;
+    border-radius: 8px;
+    padding: 5px 8px;
+    cursor: pointer;
+}

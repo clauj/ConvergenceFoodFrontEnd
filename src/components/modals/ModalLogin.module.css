@@ -1,0 +1,50 @@
+.backdrop {
+    position: fixed;
+    z-index: 1;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100vh;
+    background-color: rgba(54, 54, 54, 0.8);
+}
+
+.modal {
+    padding: 1rem;
+    background-color: #E75C62;
+    border-radius: 0.3rem;
+    color: white;
+    position: fixed;
+    width: 400px;
+    height: fit-content;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    margin: auto;
+    z-index: 1;
+}
+
+.modal > form {
+    display: flex;
+    flex-direction: column;
+}
+
+.close {
+    position: absolute;
+    right: 2%;
+    top: 2%;
+}
+
+.botaoLogin { 
+    margin-top: 0.5rem;
+    padding: 0.5rem;
+    font-weight: bold;
+    text-transform: uppercase;
+    border: none;
+    border-radius: 0.3rem;
+    cursor: pointer;
+}
+
+.botaoLogin:hover { 
+    color:#FC621A;
+}

@@ -1,0 +1,7 @@
+.container {
+    height: 75vh;
+}
+
+.container > h3, .container p {
+    margin: 0.5rem 0;
+}

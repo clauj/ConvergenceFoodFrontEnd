@@ -1,0 +1,25 @@
+.container {
+    height: 100vh;
+}
+
+.planos {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1rem;
+}
+
+.plano {
+    box-shadow: rgba(100, 100, 111, 0.2) 0px 7px 29px 0px;
+    border-radius: 0.2rem;
+    padding: 1rem;
+}
+
+.assine {
+        border: none;
+        font-size: 1.25rem;
+        padding: 0.3rem;
+        cursor: pointer;
+        background-color: #E75C62;
+        color: white;
+        border-radius: 0.2rem;
+}

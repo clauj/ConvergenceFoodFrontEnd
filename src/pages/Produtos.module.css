@@ -1,0 +1,65 @@
+.container {
+    height: fit-content;
+}
+
+.info {
+    display: flex;
+    align-items: center;
+}
+
+.titulo {
+    font-size: 3rem;
+    margin: 1rem 0;
+}
+
+.addLoja {
+    margin: 1rem;
+}
+
+.addLoja:hover {
+    color: #E75C62;
+}
+
+.container > div > ul {
+    display: flex;
+    flex-direction: column;
+}
+
+.container > div > ul > li {
+    display: flex;
+    flex-direction: col;
+    align-items: center;
+    justify-content: space-between;
+    background-color: #E75C62;
+    border-radius: 0.5rem;
+    width: 25rem;
+    cursor: pointer;
+}
+
+.container > div > ul > li:not(:first-child) {
+    margin-top: 0.5rem;
+}
+
+.container > div > ul > li:hover {
+    background-color: #d42d35;
+}
+
+.container > div > ul > li > p {
+    padding: 0.75rem;
+    color: white;
+    cursor: pointer;
+}
+
+.icons {
+    display: flex;
+    align-items: center;
+}
+
+.icon {
+    color: white;
+    cursor: pointer;
+}
+
+.icon:hover {
+    color: #c2c2c2;
+}

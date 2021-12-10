@@ -1,0 +1,27 @@
+.section {
+    display: flex;
+    flex-direction: row;
+    margin: 0.5rem;
+    justify-content: space-evenly;
+    flex-wrap: wrap;
+}
+
+.container {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    text-align: center;
+    border-radius: 0.35rem;
+    box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
+    width:300px;
+}
+
+.container > p {
+    font-size: 1.25rem;
+    margin: 0.5rem 0;
+}
+
+
+.container > img {
+    width:100%;
+}

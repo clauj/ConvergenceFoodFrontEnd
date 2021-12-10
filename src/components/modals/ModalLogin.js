@@ -2,6 +2,7 @@ import React, { useState, useContext } from "react";
 import styles from "./ModalLogin.module.css";
 import { UserContext } from "../../context/UserContext";
 import CloseIcon from "@material-ui/icons/Close";
+import { Link } from "react-router-dom";
 
 const ModalLogin = ({ closeModal }) => {
   const { userLogin, error } = useContext(UserContext);
@@ -42,6 +43,9 @@ const ModalLogin = ({ closeModal }) => {
               onClick={handleSubmit}
             />
           </form>
+          <Link to="/registrar" className={styles.registre} onClick={() => closeModal()}>
+            Não tem uma conta? Registre-se agora!
+            </Link>
         </div>
     </>
   );

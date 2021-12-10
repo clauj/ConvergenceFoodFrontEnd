@@ -50,14 +50,13 @@ const Assinatura = () => {
         const token = await mp.createCardToken(data);
 
         try {
-            const response = await api.post(`assinatura/pagamento/${planoEscolhido.id}`, {
+            await api.post(`assinatura/pagamento/${planoEscolhido.id}`, {
                 token: token.id,
                 metodo_pagamento: data.metodoPagamento,
                 tipo_documento: 'CPF',
                 numero_documento: data.identificationNumber
             }, config);
             getUser();
-            console.log(assinatura);
             localStorage.setItem("@convergencefood:assinatura", JSON.stringify(assinatura));
             history.push('/minhaconta')
         } catch (error) {

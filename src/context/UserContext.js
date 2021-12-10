@@ -51,6 +51,7 @@ export const UserStorage = ({ children }) => {
       localStorage.setItem("@convergencefood:enderecos", JSON.stringify(enderecos));
       localStorage.setItem("@convergencefood:assinatura", JSON.stringify(assinatura));
       setEnderecos(enderecos);
+      setData(user);
       setLogin(true);
       setError("");
       setToken(token);

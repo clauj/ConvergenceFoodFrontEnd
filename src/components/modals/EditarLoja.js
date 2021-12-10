@@ -161,7 +161,6 @@ const EditarLoja = ({ closeModal, setLojasResponse, loja }) => {
             <label htmlFor="cel_phone">Celular</label>
             <label htmlFor="email_loja">Email da Loja</label>
             <label htmlFor="web_link">Website</label>
-            <label htmlFor="photo">Logomarca</label>
           </div>
           <div>
             <input

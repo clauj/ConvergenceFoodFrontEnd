@@ -17,10 +17,11 @@ const Header = () => {
   const [openModal, setOpenModal] = useState(false);
   const [buttonLogin, setButtonLogin] = useState(true);
   const { cart } = useContext(CartContext);
-  let endereco = [];
-  if (enderecos.length) {
-    endereco = JSON?.parse(enderecos);
-}
+  
+
+  useEffect(() => {
+    console.log(data);
+  },[data]);
 
   const handleSearch = (event) => {
     event.preventDefault();
@@ -62,7 +63,7 @@ const Header = () => {
           <div className={styles.addressSection}>
             <p>Entregar em:</p>
             <p className={styles.addressFav}>
-            {endereco?.[0]?.address}, {endereco?.[0]?.number}
+            {enderecos?.[0]?.address}, {enderecos?.[0]?.number}
             </p>
           </div>
         )}

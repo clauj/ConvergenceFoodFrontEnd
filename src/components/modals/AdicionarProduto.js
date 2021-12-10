@@ -71,7 +71,7 @@ const AdicionarProduto = ({
     };
 
     try {
-      const response = await api.post("produto/", data, config);
+      const response = await api.post("produto", data, config);
       console.log(response);
       setResponseCriacaoProduto(response.data.message);
       history.go(0);

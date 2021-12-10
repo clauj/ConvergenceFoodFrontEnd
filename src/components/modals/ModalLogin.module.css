@@ -35,6 +35,17 @@
     top: 2%;
 }
 
+.registre {
+    text-decoration: none;
+    color: white;   
+    cursor: pointer;
+}
+
+.registre:hover {
+    background-color: #FFF;
+    color:#E75C62;
+}
+
 .botaoLogin { 
     margin-top: 0.5rem;
     padding: 0.5rem;
@@ -49,3 +60,4 @@
 .botaoLogin:hover { 
     color:#3c3c3c;
 }
+

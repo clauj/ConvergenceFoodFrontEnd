@@ -10,7 +10,7 @@ const Assinatura = () => {
     const [paymentModal, setPaymentModal] = useState(false);
     const [planos, setPlanos] = useState([]);
     const [planoEscolhido, setPlanoEscolhido] = useState({});
-    const { token, user, setAssinaturas } = useContext(UserContext);
+    const { token, user, setAssinatura, getUser, assinatura } = useContext(UserContext);
     const history = useHistory();
 
 
@@ -41,7 +41,7 @@ const Assinatura = () => {
         if (user?.admin === 1) {
             getAssinaturas();
         }
-        return user?.admin === 1 ? getAssinaturas() : history.push('/minhaconta')
+        return user?.admin === 0 ? getAssinaturas() : history.push('/minhaconta')
     }, [token, user, history]);
 
     const handleSubmit = async (data) => {
@@ -56,7 +56,9 @@ const Assinatura = () => {
                 tipo_documento: 'CPF',
                 numero_documento: data.identificationNumber
             }, config);
-            setAssinaturas(response)
+            getUser();
+            console.log(assinatura);
+            localStorage.setItem("@convergencefood:assinatura", JSON.stringify(assinatura));
             history.push('/minhaconta')
         } catch (error) {
             alert('Erro no pagamento.')
@@ -101,7 +103,7 @@ const Assinatura = () => {
                         right: 0,
                         margin: 'auto'
                     }}>
-                        <PagamentoForm handleSubmit={(e) => handleSubmit(e)} />
+                        <PagamentoForm handleSubmit={(event) => handleSubmit(event)} />
                     </div>
                 </>
             )}

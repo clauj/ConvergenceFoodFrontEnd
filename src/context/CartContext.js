@@ -66,9 +66,12 @@ export function CartProvider({ children }) {
     }, [cart]);
 
     const zerarCarrinho = useCallback((id) => {
-        let updatedCart = cart;
-        updatedCart = {}
-        setCart({...updatedCart}); 
+        setCart({
+            loja_id: 0,
+            items: [],
+            quantidade: 0,
+            total: 0,
+        }); 
     },[cart]);
 
     return (

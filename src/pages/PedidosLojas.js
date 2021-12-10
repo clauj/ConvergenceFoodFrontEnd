@@ -34,6 +34,7 @@ const PedidosLojas = () => {
   return (
     <div className={styles.pedidos}>
       <h1>Pedidos</h1>
+      {pedidos.length === 0 && <p>Não existem pedidos nesta loja.</p>}
       {pedidos.map((pedido) => (
         <div key={pedido.pedido.id} className={styles.pedido}>
           <p>ID do Pedido: {pedido.pedido.id}</p>

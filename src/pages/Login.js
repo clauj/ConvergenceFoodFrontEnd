@@ -9,20 +9,7 @@ import Grid from "@material-ui/core/Grid";
 import Typography from "@material-ui/core/Typography";
 import { makeStyles } from "@material-ui/core/styles";
 import { UserContext } from "../context/UserContext";
-import { useHistory } from "react-router";
-
-function Copyright() {
-  return (
-    <Typography variant="body2" color="textSecondary" align="center">
-      {"Todos os direitos reservados © "}
-      <Link color="inherit" href="">
-        ConvergenceDev
-      </Link>{" "}
-      {new Date().getFullYear()}
-      {"."}
-    </Typography>
-  );
-}
+import { useHistory, NavLink } from "react-router-dom";
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -117,20 +104,12 @@ export default function SignInSide() {
               Logar-se
             </Button>
             <Grid container>
-              <Grid item xs>
-                <Link href="#" variant="body2">
-                  Esqueceu a senha?
-                </Link>
-              </Grid>
               <Grid item>
-                <Link href="/registrar" variant="body2">
+                <NavLink to="/registrar">
                   {"Não tem uma conta ainda? Registre-se"}
-                </Link>
+                </NavLink>
               </Grid>
             </Grid>
-            <Box mt={5}>
-              <Copyright />
-            </Box>
           </form>
         </div>
       </Grid>

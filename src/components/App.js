@@ -1,4 +1,4 @@
-import React from "react";
+import React, {useContext} from "react";
 import { red } from "@material-ui/core/colors";
 import { createTheme } from "@material-ui/core/styles";
 import GlobalRoutes from "../routes";
@@ -20,13 +20,17 @@ const theme = createTheme({
   },
 });
 
-const App = () => (
+
+
+const App = () => {
+
+  return (
   
     <UserStorage>
     <CartProvider>
       <GlobalRoutes />
     </CartProvider>
     </UserStorage>
-);
+  )};
 
 export default App;

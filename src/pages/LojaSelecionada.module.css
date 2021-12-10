@@ -1,3 +1,6 @@
+.section {
+    height: 100vh;
+}
 .titulo {
     font-size: 3rem;
 }
@@ -7,6 +10,9 @@
     justify-content: space-evenly;
 }
 
+.pedido {
+    font-size: 1.5rem;
+}
 .loja {
     display: flex;
     align-items: center;
@@ -18,12 +24,9 @@
     padding: 2.5rem 0.25rem;
 }
 
-.loja > p {
-    font-size: 1.25rem;
-}
-
 .loja > img {
     width: 100%;
+    padding: 0.5rem;
 }
 
 .loja > button {
@@ -48,9 +51,19 @@
     margin: 0.25rem;
 }
 
+
 .description {
     border: 1px solid;
     border-radius: 0.25rem;
     padding: 0.25rem;
     font-weight: 400;
+}
+
+.description > p {
+    font-size: 8px;
+}
+
+.semProdutos {
+    margin: 1rem 0;
+    font-size: 1.2rem;
 }

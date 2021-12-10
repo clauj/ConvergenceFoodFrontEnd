@@ -43,8 +43,9 @@
     border: none;
     border-radius: 0.3rem;
     cursor: pointer;
+    color: #000;
 }
 
 .botaoLogin:hover { 
-    color:#FC621A;
+    color:#3c3c3c;
 }

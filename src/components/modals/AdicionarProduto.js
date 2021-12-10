@@ -26,8 +26,6 @@ const AdicionarProduto = ({
   useEffect(() => {
     async function fetchCategorias() {
       let config = {
-        method: "get",
-        url: "http://localhost:8000/api/categorias",
         headers: {
           Accept: "application/json",
         },

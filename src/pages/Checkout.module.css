@@ -60,6 +60,7 @@
 
 .foto {
     width: 200px;
+    padding: 0.5rem;
 }
 
 .form {
@@ -97,4 +98,8 @@
 
 .pagamento:hover {
     background-color: #b30b13;
+}
+
+.info {
+    padding: 0.25rem;
 }

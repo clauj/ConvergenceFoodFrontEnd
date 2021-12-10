@@ -1,14 +1,14 @@
 import axios from "axios";
 import React, { createContext, useState, useEffect } from "react";
 import api from "../service/api";
-import { Redirect } from "react-router-dom";
+import { useHistory } from "react-router-dom";
 
 export const UserContext = createContext();
 
 export const UserStorage = ({ children }) => {
+
   const [error, setError] = useState("");
   const [loading, setLoading] = useState(false);
-  const [assinaturas, setAssinaturas] = useState([]);
   const [data, setData] = useState(() => {
     const user = localStorage.getItem("@convergencefood:user");
     if (user) return JSON.parse(user)
@@ -28,6 +28,12 @@ export const UserStorage = ({ children }) => {
     if (enderecos) return enderecos;
     else return [];
   });
+  const [assinatura, setAssinatura] = useState(() => {
+    const assinatura = localStorage.getItem("@convergencefood:assinatura");
+    if (assinatura) return assinatura;
+    else return null;
+  });
+  const history = useHistory();
 
   async function userLogin(email, password) {
     const loginForm = {
@@ -38,17 +44,18 @@ export const UserStorage = ({ children }) => {
     try {
       setLoading(true);
       const {
-        data: { token, user, enderecos, assinaturas },
+        data: { token, user, enderecos, assinatura },
       } = await api.post("auth/login", loginForm);
       localStorage.setItem("@convergencefood:token", token);
       localStorage.setItem("@convergencefood:user", JSON.stringify(user));
       localStorage.setItem("@convergencefood:enderecos", JSON.stringify(enderecos));
-      setData(user);
+      localStorage.setItem("@convergencefood:assinatura", JSON.stringify(assinatura));
       setEnderecos(enderecos);
       setLogin(true);
       setError("");
       setToken(token);
-      if (assinaturas) setAssinaturas(assinaturas)
+      setAssinatura(assinatura)
+      console.log("Login Assinaturas: ", assinatura)
     } catch (error) {
       const { response } = error;
       if (response) {
@@ -56,7 +63,6 @@ export const UserStorage = ({ children }) => {
       } else setError("Servidor não responde");
     } finally {
       setLoading(false);
-      return <Redirect to="/minhaconta" />
     }
   }
   async function userLogout() {
@@ -76,16 +82,33 @@ export const UserStorage = ({ children }) => {
       localStorage.removeItem("@convergencefood:token");
       localStorage.removeItem("@convergencefood:user");
       localStorage.removeItem("@convergencefood:enderecos");
-      return <Redirect to="/" />
+      localStorage.removeItem("@convergencefood:assinatura");
+      // history.push("/minhaconta");
     } catch (error) {
       console.log(error);
-    } finally {
+    }
+  }
+
+  async function getUser() {
+    try {
+      const config = {
+        headers: {
+          Accept: "application/json",
+          Authorization: `Bearer ${token}`,
+        },
+      };
+
+      const {data} = await api.get("user", config);
+      console.log("user: ", data);
+      setAssinatura(data.assinatura);
+    } catch (error) {
+      console.log(error.response);
     }
   }
 
   return (
     <UserContext.Provider
-      value={{ userLogin, userLogout, setAssinaturas, user: data, data, enderecos, login, loading, error, token, assinaturas }}
+      value={{ userLogin, userLogout, setAssinatura, getUser, user: data, data, enderecos, login, loading, error, token, assinatura }}
     >
       {children}
     </UserContext.Provider>

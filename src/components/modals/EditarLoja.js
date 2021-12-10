@@ -297,9 +297,9 @@ const EditarLoja = ({ closeModal, setLojasResponse, loja }) => {
               value={website}
               onChange={(event) => setWebsite(event.target.value)}
             />
-            <img ref={photoRef} src={loja.photo} alt={loja.corporate_name}></img>
+            {/* <img ref={photoRef} src={loja.photo} alt={loja.corporate_name}></img>
             <input
-              required type="file" id="photo" name="photo" onChange={handleFile} />
+              required type="file" id="photo" name="photo" onChange={handleFile} /> */}
             <button
               type="submit"
               className={styles.botao}

@@ -45,7 +45,7 @@ const Checkout = () => {
 
       const cardTokenMp = await mp.createCardToken({
         cardNumber: cardNumber,
-        cardholderName: metodoPagamento,
+        cardholderName: cardholderName,
         cardExpirationMonth: cardExpirationMonth,
         cardExpirationYear: cardExpirationYear,
         securityCode: securityCode,
@@ -110,17 +110,20 @@ const Checkout = () => {
     };
 
     try {
-      await api.post(`pagamento/${pedido.pedido.id}`, dados, config);
+      setErro("");
+      const response = await api.post(`pagamento/${pedido.pedido.id}`, dados, config);
+      console.log(response);
       history.push({
         pathname: "/pedido",
         state: {
           pedido
         }
       });
+      zerarCarrinho()
     }
     catch (error) {
-      console.log("Erro:", error);
-      setErro("Erro");
+      console.log(error.response.data.message);
+      setErro(error.response.data.message);
 
     }
     finally {
@@ -162,7 +165,7 @@ const Checkout = () => {
             </div>
             <div>
               <img
-                src={item.fotos[0].aws}
+                src={item.fotos[0].path}
                 alt={item.name}
                 className={styles.foto}
               ></img>

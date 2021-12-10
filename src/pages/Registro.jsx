@@ -73,6 +73,7 @@ export default function SignUp() {
   const [allow, setAllow] = useState(false);
   const [userType, setUserType] = useState(0);
   const [open, setOpen] = React.useState(false);
+  const [erro, setErro] = useState([]);
 
   const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
@@ -124,6 +125,7 @@ export default function SignUp() {
       const cepString = cep.toString();
       if (cep.length === 8) {
         const { data } = await api.post('cep', { cep: cepString });
+        setLogradouro(data.viaCep.logradouro);
         setLogradouro(data.viaCep.logradouro);
         setBairro(data.viaCep.bairro);
         setSelecionaEstado(data.viaCep.uf);
@@ -179,7 +181,7 @@ export default function SignUp() {
       formData.append('cpf', user.cpf);
       formData.append('gender', user.gender);
       formData.append('address_name', user.address_name);
-      formData.append('address', user.formAddress);
+      formData.append('address', user.address);
       formData.append('district', user.district);
       formData.append('number', user.number);
       formData.append('complement', user.complement);
@@ -203,12 +205,16 @@ export default function SignUp() {
     if (!user.complement) delete user.complement;
 
     try {
+      console.log(formData)
       await api.post(`auth/register${userType === 1 ? '/admin' : ''}`, userType === 1 ? formData : user)
       alert('Cadastrado com sucesso!')
       history.push('/login');
     } catch (error) {
       alert('Erro no cadastro.')
-    }
+      {error.response.errors.map((erro) => (
+        setErro(erro)
+      ))};
+    };
   };
 
 

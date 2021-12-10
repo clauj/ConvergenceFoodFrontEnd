@@ -29,7 +29,7 @@ const Carrinho = () => {
                         </div>
                     </div>
                     <div>
-                        <img src={item.fotos[0].aws} alt={item.name} className={styles.foto}></img>
+                        <img src={item.fotos[0].path} alt={item.name} className={styles.foto}></img>
                     </div>
                 </div>
             ))}

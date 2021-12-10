@@ -20,7 +20,14 @@ function PagamentoForm({ handleSubmit }) {
 
     useEffect(() => {
         async function fetchMetodos() {
-            const { data } = await api.get(`pagamento/metodos`);
+            let config = {
+                headers: {
+                    Accept: "application/json",
+                    Authorization: `Bearer ${token}`,
+                },
+            };
+
+            const { data } = await api.get(`pagamento/metodos`, config);
             setMetodosPagamento(data);
         }
         fetchMetodos();

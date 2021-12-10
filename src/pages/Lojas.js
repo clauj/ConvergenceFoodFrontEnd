@@ -13,7 +13,9 @@ const Lojas = () => {
   const [lojasResponse, setLojasResponse] = useState([]);
   const [modalAdicionarLoja, setModalAdicionarLoja] = useState(false);
   const [modalEditarLoja, setModalEditarLoja] = useState({});
-  const { token, user, assinaturas } = useContext(UserContext);
+  const { token, user, assinatura, getUser } = useContext(UserContext);
+
+  console.log(assinatura);
 
   const history = useHistory();
 
@@ -29,13 +31,14 @@ const Lojas = () => {
 
       const { data } = await api.get("user", config);
       setLojasResponse(data.lojas);
+      console.log(lojasResponse);
     }
-
     fetchLojas();
-  }, [token]);
+  }, [token, assinatura]);
 
   const handleDeleteLoja = async (id) => {
-    if (assinaturas.length < 1) return alert('Faça uma assinatura para gerenciar as lojas.')
+    if (assinatura.length < 1)
+      return alert("Faça uma assinatura para gerenciar as lojas.");
     let config = {
       method: "delete",
       headers: {
@@ -51,39 +54,42 @@ const Lojas = () => {
     } catch (error) {
       console.log(error);
     }
-  }
+  };
 
   const handleOpenLoja = (id) => {
-    if (assinaturas.length < 1) return alert('Faça uma assinatura para gerenciar as lojas.')
+    if (assinatura === "null")
+      return alert("Faça uma assinatura para gerenciar as lojas.");
     history.push(`/lojas/${id}`);
   };
 
   const handleAddLoja = () => {
-    if (assinaturas.length < 1) return alert('Faça uma assinatura para gerenciar as lojas.')
-    setModalAdicionarLoja(true)
-  }
+    if (assinatura === "null")
+      return alert("Faça uma assinatura para gerenciar as lojas.");
+    setModalAdicionarLoja(true);
+  };
 
   const handleEditLoja = (item) => {
-    if (assinaturas.length < 1) return alert('Faça uma assinatura para gerenciar as lojas.')
-    setModalEditarLoja(item)
-  }
+    if (assinatura === "null")
+      return alert("Faça uma assinatura para gerenciar as lojas.");
+    setModalEditarLoja(item);
+  };
 
   return (
     <div className={`${styles.container} container`}>
       <div className={styles.info}>
         <p className={styles.titulo}>Lojas</p>
-        <AddCircleIcon
-          onClick={() => handleAddLoja()}
-          className={styles.addLoja}
-        />
+        {lojasResponse.length < assinatura.numbers_lojas && (
+          <AddCircleIcon
+            onClick={() => handleAddLoja()}
+            className={styles.addLoja}
+          />
+        )}
       </div>
       <div>
         <ul>
           {lojasResponse.map((item) => (
             <li key={item.id}>
-              <p
-                onClick={() => handleOpenLoja(item.id)}
-              >
+              <p onClick={() => handleOpenLoja(item.id)}>
                 {item.corporate_name}
               </p>
               <div className={styles.icons}>

@@ -8,7 +8,7 @@ import styles from '../components/Cards.module.css'
 const Cards = () => {
 
     const handleClick = (event) => {
-        console.log(event.target.alt)
+
     }
     return (
         <div className={styles.container} onClick={handleClick}>

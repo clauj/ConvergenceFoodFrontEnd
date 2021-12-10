@@ -16,16 +16,15 @@ const Lojas = () => {
         method: "get",
         headers: {
           Accept: "application/json",
-          Authorization: `Bearer ${token}`,
         },
       };
 
       const response = await api.get("lojas", config);
       setLojasResponse(response.data.lojas);
     }
-
-    if (token) return fetchLojas();
-    return setLojasResponse([]);
+    fetchLojas();
+    // if (token) return fetchLojas();
+    // return setLojasResponse([]);
   }, [token]);
 
   const handleLoja = (id) => {

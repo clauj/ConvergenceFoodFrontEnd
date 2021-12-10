@@ -208,7 +208,7 @@ export default function SignUp() {
       console.log(formData)
       await api.post(`auth/register${userType === 1 ? '/admin' : ''}`, userType === 1 ? formData : user)
       alert('Cadastrado com sucesso!')
-      history.push('/login');
+      history.push('/');
     } catch (error) {
       alert('Erro no cadastro.')
       {error.response.errors.map((erro) => (

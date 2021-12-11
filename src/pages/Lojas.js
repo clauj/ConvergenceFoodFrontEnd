@@ -57,19 +57,19 @@ const Lojas = () => {
   };
 
   const handleOpenLoja = (id) => {
-    if (assinatura === "null")
+    if (assinatura === null)
       return alert("Faça uma assinatura para gerenciar as lojas.");
     history.push(`/lojas/${id}`);
   };
 
   const handleAddLoja = () => {
-    if (assinatura === "null")
+    if (assinatura === null)
       return alert("Faça uma assinatura para gerenciar as lojas.");
     setModalAdicionarLoja(true);
   };
 
   const handleEditLoja = (item) => {
-    if (assinatura === "null")
+    if (assinatura === null)
       return alert("Faça uma assinatura para gerenciar as lojas.");
     setModalEditarLoja(item);
   };
@@ -78,7 +78,7 @@ const Lojas = () => {
     <div className={`${styles.container} container`}>
       <div className={styles.info}>
         <p className={styles.titulo}>Lojas</p>
-        {lojasResponse.length < assinatura.numbers_lojas && (
+        {lojasResponse?.length < assinatura?.numbers_lojas && (
           <AddCircleIcon
             onClick={() => handleAddLoja()}
             className={styles.addLoja}

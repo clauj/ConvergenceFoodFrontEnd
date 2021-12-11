@@ -38,10 +38,7 @@ const Assinatura = () => {
             console.log(data.assinaturas)
         }
 
-        if (user?.admin === 1) {
-            getAssinaturas();
-        }
-        return user?.admin === 0 ? getAssinaturas() : history.push('/minhaconta')
+        return user?.admin === 1 ? getAssinaturas() : history.push('/minhaconta')
     }, [token, user, history]);
 
     const handleSubmit = async (data) => {

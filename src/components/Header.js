@@ -68,7 +68,7 @@ const Header = () => {
           </div>
         )}
         <div className={styles.loggedArea}>
-          {data?.admin === 1 && assinatura === "null" && (
+          {data?.admin === 1 && assinatura === null && (
             <button
               onClick={() => history.push("/assine")}
               className={styles.assinaturaPendente}

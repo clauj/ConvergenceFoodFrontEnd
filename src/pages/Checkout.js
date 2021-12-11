@@ -18,12 +18,10 @@ const Checkout = () => {
   const [cardExpirationYear, setCardExpirationYear] = useState(null);
   const [securityCode, setSecurityCode] = useState(null);
   const [identificationType, setIdentificationType] = useState("CPF");
-  const [identificationNumber, setIdentificationNumber] = useState(null);
+  const [identificationNumber, setIdentificationNumber] = useState("");
 
   const { cart, zerarCarrinho } = useContext(CartContext);
   const { enderecos, token } = useContext(UserContext);
-
-  console.log(enderecos)
 
   const history = useHistory();
 
@@ -64,7 +62,7 @@ const Checkout = () => {
   const handleCreateCart = async (cardTokenMp) => {
     let valores = {
       loja_id: cart.loja_id,
-      endereco_id: JSON.parse(enderecos)[0].id,
+      endereco_id: JSON.parse(enderecos[0].id),
     };
     try {
       const { data } = await api.post("carrinho", valores, config);
@@ -107,9 +105,11 @@ const Checkout = () => {
     let dados = {
       token: cardTokenMp.id,
       metodo_pagamento: metodoPagamento,
-      tipo_documento: identificationType,
+      tipo_documento: "CPF",
       numero_documento: identificationNumber,
     };
+
+    console.log("Dados: ", dados);
 
     try {
       setErro("");

@@ -25,7 +25,7 @@ export const UserStorage = ({ children }) => {
   });
   const [enderecos, setEnderecos] = useState(() => {
     const enderecos = localStorage.getItem("@convergencefood:enderecos");
-    if (enderecos) return enderecos;
+    if (enderecos) return JSON.parse(enderecos)
     else return [];
   });
   const [assinatura, setAssinatura] = useState(() => {

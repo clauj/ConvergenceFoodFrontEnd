@@ -23,6 +23,8 @@ const Checkout = () => {
   const { cart, zerarCarrinho } = useContext(CartContext);
   const { enderecos, token } = useContext(UserContext);
 
+  console.log(enderecos)
+
   const history = useHistory();
 
   let config = {

@@ -129,7 +129,7 @@ export default function SignUp() {
         setLogradouro(data.viaCep.logradouro);
         setBairro(data.viaCep.bairro);
         setSelecionaEstado(data.viaCep.uf);
-        setCidade(data.viaCep.localidade);
+        setCidade(data?.cidade_id);
         setEstadoParaApiGuilherme(data.estado.id);
       }
     }
@@ -139,14 +139,12 @@ export default function SignUp() {
   useEffect(() => {
     async function getCityId() {
       const response = await api.get(`cep/cidade/${estadoParaApiGuilherme}`);
-      const formatedCidade = cleanText(cidade);
-      const cityId = response.data.filter(
-        (city) => city.name.toLowerCase() === formatedCidade
-      );
-      setCidade_id(cityId[0]?.id || 0)
+      setCidades(response.data);
     }
     getCityId();
-  }, [cidade, estadoParaApiGuilherme]);
+  }, [estadoParaApiGuilherme]);
+
+  console.log(cidades);
 
 
   const enviarForm = async (event) => {
@@ -485,10 +483,9 @@ export default function SignUp() {
                   }}
                   disabled={cep && cep.length === 8}
                 >
-                  <option aria-label="None" value="" defaultValue hidden />
                   {cidades.map((cidade) => (
-                    <option value={cidade.name} key={cidade.id}>
-                      {cidade.nome}
+                    <option value={cidade.id} key={cidade.id}>
+                      {cidade.name}
                     </option>
                   ))}
                   ;

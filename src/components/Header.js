@@ -17,6 +17,8 @@ const Header = () => {
   const [openModal, setOpenModal] = useState(false);
   const [buttonLogin, setButtonLogin] = useState(true);
   const { cart } = useContext(CartContext);
+
+  console.log(assinatura);
   
 
   useEffect(() => {

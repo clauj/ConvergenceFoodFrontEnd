@@ -211,9 +211,6 @@ export default function SignUp() {
       history.push('/');
     } catch (error) {
       alert('Erro no cadastro.')
-      {error.response.errors.map((erro) => (
-        setErro(erro)
-      ))};
     };
   };
 

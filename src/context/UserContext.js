@@ -101,7 +101,7 @@ export const UserStorage = ({ children }) => {
 
       const {data} = await api.get("user", config);
       console.log("user: ", data);
-      setAssinatura(data.assinatura);
+      setAssinatura([{ numbers_lojas: 2}]);
     } catch (error) {
       console.log(error.response);
     }

@@ -144,7 +144,7 @@ export default function SignUp() {
     getCityId();
   }, [estadoParaApiGuilherme]);
 
-  console.log(cidades);
+  console.log(cidade);
 
 
   const enviarForm = async (event) => {
@@ -166,9 +166,11 @@ export default function SignUp() {
       number: formNumber,
       complement: formComplement,
       estado_id: estadoParaApiGuilherme,
-      cidade_id,
+      cidade_id: cidade,
       admin: userType,
     }
+
+    console.log(user);
 
     let formData = new FormData();
     if (userType === 1) {
@@ -267,9 +269,8 @@ export default function SignUp() {
               <TextField
                 variant="outlined"
                 required
-                inputProps={{
-                  maxLength: 11,
-                }}
+                inputProps={{ maxLength: 11 }}
+                type="number"
                 fullWidth
                 id="cpf"
                 label="CPF"
@@ -402,6 +403,7 @@ export default function SignUp() {
                 type="number"
                 id="number"
                 autoComplete="number"
+                InputProps={{ inputProps: { min: 1, max: 99999 } }}
                 onChange={({ target }) => setFormNumber(target.value)}
               />
             </Grid>

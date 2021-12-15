@@ -30,7 +30,7 @@ export const UserStorage = ({ children }) => {
   });
   const [assinatura, setAssinatura] = useState(() => {
     const assinatura = localStorage.getItem("@convergencefood:assinatura");
-    if (assinatura) return assinatura;
+    if (assinatura) return JSON.parse(assinatura);
     else return null;
   });
   const history = useHistory();

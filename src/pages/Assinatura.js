@@ -44,16 +44,16 @@ const Assinatura = () => {
     const handleSubmit = async (data) => {
 
 
-        // const token = await mp.createCardToken(data);
+        const token = await mp.createCardToken(data);
 
-            // await api.post(`assinatura/pagamento/${planoEscolhido.id}`, {
-            //     token: token.id,
-            //     metodo_pagamento: data.metodoPagamento,
-            //     tipo_documento: 'CPF',
-            //     numero_documento: data.identificationNumber
-            // }, config);
+            await api.post(`assinatura/pagamento/${planoEscolhido.id}`, {
+                token: token.id,
+                metodo_pagamento: data.metodoPagamento,
+                tipo_documento: 'CPF',
+                numero_documento: data.identificationNumber
+            }, config);
             getUser();
-            localStorage.setItem("@convergencefood:assinatura", JSON.stringify(assinatura));
+            // localStorage.setItem("@convergencefood:assinatura", JSON.stringify(assinatura));
             history.push('/minhaconta')
 
     }

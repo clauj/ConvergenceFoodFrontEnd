@@ -382,7 +382,6 @@ export default function SignUp() {
                 type="text"
                 id="address"
                 autoComplete="address"
-                disabled={cep && cep.length === 8}
               />
             </Grid>
             <Grid item xs={4}>
@@ -414,7 +413,6 @@ export default function SignUp() {
                 type="text"
                 id="district"
                 autoComplete="district"
-                disabled={cep && cep.length === 8}
               />
             </Grid>
             <Grid item xs={12}>
@@ -446,7 +444,6 @@ export default function SignUp() {
                   }}
                   value={selecionaEstado}
                   onChange={(event) => onChangeState(event)}
-                  disabled={cep && cep.length === 8}
                 >
                   <option aria-label="None" value="" defaultValue hidden />
                   {estados.map((estado) => (
@@ -475,7 +472,6 @@ export default function SignUp() {
                     name: "cidade_id",
                     id: "cidade_id",
                   }}
-                  disabled={cep && cep.length === 8}
                 >
                   {cidades.map((cidade) => (
                     <option value={cidade.id} key={cidade.id}>

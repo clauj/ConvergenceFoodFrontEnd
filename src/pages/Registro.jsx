@@ -510,7 +510,7 @@ export default function SignUp() {
                   />
                 </Grid>
                 <Grid item xs={12}>
-                  <TextField
+                  {/* <TextField
                     variant="outlined"
                     required
                     fullWidth
@@ -520,7 +520,26 @@ export default function SignUp() {
                     id="cnpj"
                     autoComplete="cnpj"
                     onChange={({ target }) => setLojistaInfo({ ...lojistaInfo, cnpj: target.value })}
-                  />
+                  /> */}
+
+                <InputMask mask="99.999.999/9999-99" value={formCpf} onChange={({ target }) => 
+                  setLojistaInfo({ ...lojistaInfo, cnpj: target.value })
+                  }>
+                  {(props) => 
+                    <TextField
+                      {...props}
+                      type="text"
+                      variant="outlined"
+                      required
+                      id="cnpj"
+                      label="CNPJ"
+                      name="cnpj"
+                      autoComplete="cnpj"
+                      fullWidth
+                      disableUnderline
+                    />
+                  }
+                </InputMask>
                 </Grid>
                 <Grid item xs={12}>
                   <TextField

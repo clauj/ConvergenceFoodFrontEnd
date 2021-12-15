@@ -387,7 +387,6 @@ export default function SignUp() {
             <Grid item xs={4}>
               <TextField
                 variant="outlined"
-                required
                 fullWidth
                 name="number"
                 label="Número"

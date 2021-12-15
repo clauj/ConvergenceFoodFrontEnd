@@ -5,6 +5,8 @@ import api from "../service/api";
 import { useMercadopago } from "react-sdk-mercadopago";
 import { UserContext } from "../context/UserContext";
 import { useHistory } from 'react-router-dom';
+import InputMask from "react-input-mask";
+import TextField from "@material-ui/core/TextField";
 
 const Checkout = () => {
   const [metodosPagamento, setMetodosPagamento] = useState([]);
@@ -18,7 +20,7 @@ const Checkout = () => {
   const [cardExpirationYear, setCardExpirationYear] = useState(null);
   const [securityCode, setSecurityCode] = useState(null);
   const [identificationType, setIdentificationType] = useState("CPF");
-  const [identificationNumber, setIdentificationNumber] = useState("");
+  const [identificationNumber, setIdentificationNumber] = useState('');
 
   const { cart, zerarCarrinho } = useContext(CartContext);
   const { enderecos, token } = useContext(UserContext);
@@ -44,13 +46,13 @@ const Checkout = () => {
     try {
 
       const cardTokenMp = await mp.createCardToken({
-        cardNumber: cardNumber,
+        cardNumber: cardNumber.replace(/\s/g, ''),
         cardholderName: cardholderName,
         cardExpirationMonth: cardExpirationMonth,
         cardExpirationYear: cardExpirationYear,
         securityCode: securityCode,
         identificationType: identificationType,
-        identificationNumber: identificationNumber,
+        identificationNumber: identificationNumber.replace(/\.|\-/g, ''),
       });
       handleCreateCart(cardTokenMp);
     }
@@ -191,68 +193,133 @@ const Checkout = () => {
           </select>
         </div>
         <div>
-          <label htmlFor="cardNumber">Numero do Cartão:</label>
-          <input
-            type="number"
-            id="cardNumber"
-            name="cardNumber"
-            onChange={(event) => setCardNumber(event.target.value)}
-          ></input>
+          <InputMask
+            mask="9999 9999 9999 9999" 
+            maskChar=" " 
+            value={cardNumber} 
+            onChange={({ target }) => {
+              setCardNumber(target.value) 
+            }}
+          >
+            {(props) => 
+                <TextField
+                  {...props}
+                  variant="outlined"
+                  required
+                  fullWidth
+                  name="cardNumber"
+                  label="Numero do Cartão"
+                  type="text"
+                  id="cardNumber"
+                  autoComplete="cardNumber"
+                />
+              }
+          </InputMask>
         </div>
         <div>
-          <label htmlFor="cardholderName">Nome do Titular:</label>
-          <input
+          <TextField
+            variant="outlined"
+            required
+            fullWidth
+            name="cardholderName"
+            label="Nome do Titular"
             type="text"
             id="cardholderName"
-            name="cardholderName"
-            onChange={(event) => setCardHolderName(event.target.value)}
-          ></input>
+            autoComplete="cardholderName"
+            onChange={({ target }) => setCardHolderName(target.value)}
+          />
         </div>
         <div>
-          <label htmlFor="cardExpirationMonth">Mês de expiração:</label>
-          <input
-            type="number"
-            id="cardExpirationMonth"
-            name="cardExpirationMonth"
-            min="1"
-            max="12"
-            maxLength="2"
-            onChange={(event) => setCardExpirationMonth(event.target.value)}
-          ></input>
+          <InputMask
+            mask="99" 
+            maskChar=" " 
+            value={cardExpirationMonth} 
+            onChange={({ target }) => {
+              setCardExpirationMonth(target.value) 
+            }}
+          >
+            {(props) => 
+                <TextField
+                  {...props}
+                  variant="outlined"
+                  required
+                  fullWidth
+                  name="cardExpirationMonth"
+                  label="Mês de expiração"
+                  type="text"
+                  id="cardExpirationMonth"
+                  autoComplete="cardExpirationMonth"
+                />
+              }
+          </InputMask>
         </div>
         <div>
-          <label htmlFor="cardExpirationYear">Ano de expiração:</label>
-          <input
-            type="number"
-            id="cardExpirationYear"
-            name="cardExpirationYear"
-            min="111"
-            max="999"
-            maxLength="3"
-            onChange={(event) => setCardExpirationYear(event.target.value)}
-          ></input>
+          <InputMask
+            mask="99" 
+            maskChar=" " 
+            value={cardExpirationYear} 
+            onChange={({ target }) => {
+              setCardExpirationYear(target.value) 
+            }}
+          >
+            {(inputProps) => 
+                <TextField
+                  {...inputProps}
+                  variant="outlined"
+                  required
+                  fullWidth
+                  name="cardExpirationYear"
+                  label="Ano de expiração"
+                  type="text"
+                  id="cardExpirationYear"
+                  autoComplete="cardExpirationYear"
+              />
+              }
+          </InputMask>
         </div>
         <div>
-          <label htmlFor="securityCode">Código de Segurança (CVV):</label>
-          <input
-            type="number"
-            id="securityCode"
-            name="securityCode"
-            min="3"
-            max="3"
-            maxLength="3"
-            onChange={(event) => setSecurityCode(event.target.value)}
-          ></input>
+          <InputMask
+            mask="999" 
+            maskChar=" " 
+            value={securityCode} 
+            onChange={({ target }) => {
+              setSecurityCode(target.value) 
+            }}
+          >
+            {(props) => 
+                <TextField
+                  {...props}
+                  variant="outlined"
+                  required
+                  fullWidth
+                  name="securityCode"
+                  label="Código de Segurança"
+                  type="text"
+                  id="securityCode"
+                  autoComplete="securityCode"
+                />
+              }
+          </InputMask>
         </div>
         <div>
-          <label htmlFor="identificationNumber">CPF:</label>
-          <input
-            type="number"
-            id="identificationNumber"
-            name="identificationNumber"
-            maxLength="11"
-            onChange={(event) => setIdentificationNumber(event.target.value)}
-          ></input>
+        <InputMask mask="999.999.999-99" maskChar=" " value={identificationNumber} onChange={({ target }) => {
+            setIdentificationNumber(target.value) 
+          }}>
+            {(props) => 
+              <TextField
+                {...props}
+                type="text"
+                variant="outlined"
+                required
+                id="identificationNumber"
+                label="CPF"
+                name="identificationNumber"
+                autoComplete="identificationNumber"
+                fullWidth
+                disableUnderline
+              />
+            }
+          </InputMask>
         </div>
         <div>
           <button type="button" disabled={loading} className={styles.pagamento} onClick={() => handleCheckout()}>

@@ -19,6 +19,7 @@ import { LegendToggle } from "@mui/icons-material";
 import axios from "axios";
 import PagamentoForm from "../components/PagamentoForm";
 import { useMercadopago } from "react-sdk-mercadopago";
+import InputMask from "react-input-mask";
 
 // import Modal from '@mui/material/Modal';
 
@@ -218,21 +219,6 @@ export default function SignUp() {
 
   return (
     <Container component="main" maxWidth="md">
-      {/* <Modal
-        open={open}
-        onClose={handleClose}
-        aria-labelledby="modal-modal-title"
-        aria-describedby="modal-modal-description"
-      >
-        <Box sx={style}>
-          <Typography id="modal-modal-title" variant="h6" component="h2">
-            Text in a modal
-          </Typography>
-          <Typography id="modal-modal-description" sx={{ mt: 2 }}>
-            Duis mollis, est non commodo luctus, nisi erat porttitor ligula.
-          </Typography>
-        </Box>
-      </Modal> */}
       <CssBaseline />
       <div className={classes.paper}>
         <Typography component="h1" variant="h5">
@@ -266,18 +252,24 @@ export default function SignUp() {
               />
             </Grid>
             <Grid item xs={12} sm={6}>
-              <TextField
-                variant="outlined"
-                required
-                inputProps={{ maxLength: 11 }}
-                type="number"
-                fullWidth
-                id="cpf"
-                label="CPF"
-                name="cpf"
-                autoComplete="cpf"
-                onChange={({ target }) => setFormCpf(target.value)}
-              />
+            <InputMask mask="999.999.999-99" value={formCpf} onChange={({ target }) => {
+              setFormCpf(target.value) 
+            }}>
+              {(props) => 
+                <TextField
+                  {...props}
+                  type="text"
+                  variant="outlined"
+                  required
+                  id="cpf"
+                  label="CPF"
+                  name="cpf"
+                  autoComplete="cpf"
+                  fullWidth
+                  disableUnderline
+                />
+              }
+            </InputMask>
             </Grid>
             <Grid item xs={6} sm={6}>
               <FormControl

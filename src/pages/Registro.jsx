@@ -522,7 +522,7 @@ export default function SignUp() {
                     onChange={({ target }) => setLojistaInfo({ ...lojistaInfo, cnpj: target.value })}
                   /> */}
 
-                <InputMask mask="99.999.999/9999-99" value={formCpf} onChange={({ target }) => 
+                <InputMask mask="99.999.999/9999-99" value={lojistaInfo.cnpj} onChange={({ target }) => 
                   setLojistaInfo({ ...lojistaInfo, cnpj: target.value })
                   }>
                   {(props) => 

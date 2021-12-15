@@ -87,6 +87,13 @@ export const UserStorage = ({ children }) => {
       // history.push("/minhaconta");
     } catch (error) {
       console.log(error);
+      setData({});
+      setLogin(false);
+      setToken("");
+      localStorage.removeItem("@convergencefood:token");
+      localStorage.removeItem("@convergencefood:user");
+      localStorage.removeItem("@convergencefood:enderecos");
+      localStorage.removeItem("@convergencefood:assinatura");
     }
   }
 

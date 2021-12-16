@@ -53,7 +53,7 @@ const PedidoUser = (props) => {
         getLoja();
         getPedido();
 
-    }, [loja, pedido]);
+    }, []);
 
     return(
         pedido && loja ? 

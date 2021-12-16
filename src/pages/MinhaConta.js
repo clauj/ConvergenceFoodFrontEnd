@@ -36,7 +36,7 @@ const MinhaConta = () => {
             }
         }
         getPedidos();
-    },[user.admin === 1, pedidosAndamento, pedidosFinalizados ]);
+    },[user.admin === 1]);
 
 
     return (

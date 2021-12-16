@@ -58,6 +58,7 @@ const Checkout = () => {
     }
     catch (error) {
       console.log(error.response);
+      setLoading(false);
     }
   };
 

@@ -10,6 +10,20 @@ const PedidoUser = (props) => {
     const [pedido, setPedido] = useState(null);
     const { token } = useContext(UserContext);
 
+    async function finalizarPedido(pedido_id) {
+        let config = {
+            method: "get",
+            headers: {
+                Accept: "application/json",
+                Authorization: `Bearer ${token}`,
+            },
+        };
+        let dataAxios = {
+        status: "Finalizado"
+        }
+        const { data } = await api.put(`pedido/${pedido_id}`, dataAxios, config);
+    }
+
     useEffect(() => {
 
         const getLoja = async (loja_id) => {
@@ -49,14 +63,21 @@ const PedidoUser = (props) => {
                         <img className={styles.image} src={loja.loja.photo} />
                         <h3>{loja.loja.trading_name}</h3>
                     </div>
-                    {props.pendente && 
-                        <span className={styles.bro}/>
-                    }
                     {props.status === 'Cancelado' &&
                         <span className={styles.broCancelado}/>
                     }
                     {props.status === 'Finalizado' &&
                         <span className={styles.broFinalizado}/>
+                    }
+                    {props.pendente && 
+                        pedido.pedido.status === 'Entrega' ? 
+                            <button className={styles.btnFinalizar} onClick={() => finalizarPedido(pedido.pedido.id)}>
+                                Confirmar Entrega
+                            </button>
+                        :
+                            props.pendente &&
+                                <span className={styles.bro}/>
+
                     }
                     <div className={styles.statusPedido}>
                         <h4>Pedido {pedido.pedido.status}</h4>

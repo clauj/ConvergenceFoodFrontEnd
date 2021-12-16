@@ -43,7 +43,7 @@
 }
   
 .bro {
-    border-bottom: 5px solid;
+    border-bottom: 18px solid;
     animation: colorWash 3s infinite;
 }
 
@@ -54,7 +54,7 @@
 }
 
 .broCancelado {
-    border-bottom: 5px solid;
+    border-bottom: 18px solid;
     animation: colorWashCancel 3s infinite;
 }
 
@@ -65,6 +65,24 @@
 }
 
 .broFinalizado {
-    border-bottom: 5px solid;
+    border-bottom: 18px solid;
     animation: colorWashFinalizado 3s infinite;
+}
+
+@keyframes colorWashEntrega {
+    from {border-bottom-color: #ece393;}
+    42%{border-bottom-color: #ebd619;}
+    to {border-bottom-color: #ece393;}
+}
+
+.broEntrega {
+    border-bottom: 18px solid;
+    animation: colorWashEntrega 3s infinite;
+}
+
+.btnFinalizar {
+    border: 1px solid #3061e7;
+    background-color: transparent;
+    color: #3061e7;
+    cursor: pointer;
 }

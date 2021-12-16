@@ -9,6 +9,7 @@ const MinhaConta = () => {
     const { user, token } = useContext(UserContext);
     const [pedidosAndamento, setPedidosAndamento] = useState([]);
     const [pedidosFinalizados, setPedidosFinalizados] = useState([]);
+    const [update, setUpdate] = useState(false);
 
     useEffect(() => {
         async function getPedidos() {
@@ -49,7 +50,7 @@ const MinhaConta = () => {
                     <div className={styles.pedidos}>
                         {pedidosAndamento.length > 0 && 
                             pedidosAndamento.map((pedido) => (
-                                <PedidoUser key={`${pedido.id}`} pendente id={pedido.id} />
+                                <PedidoUser key={`${pedido.id}`} pendente id={pedido.id}/>
                             ))
                         }
                     </div>

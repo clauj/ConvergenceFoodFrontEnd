@@ -43,9 +43,13 @@ const Assinatura = () => {
 
     const handleSubmit = async (data) => {
 
+        console.log("Data: ", data);
+
 
         const token = await mp.createCardToken(data);
 
+
+        try {
             await api.post(`assinatura/pagamento/${planoEscolhido.id}`, {
                 token: token.id,
                 metodo_pagamento: data.metodoPagamento,
@@ -55,8 +59,14 @@ const Assinatura = () => {
             getUser();
             // localStorage.setItem("@convergencefood:assinatura", JSON.stringify(assinatura));
             history.push('/minhaconta')
+            
+        } catch (error) {
+            console.log(error);
+            console.log(error.response)
+        }
 
-    }
+
+    };
 
     const handleSubscribe = (plano) => {
         setPlanoEscolhido(plano)

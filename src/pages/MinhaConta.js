@@ -36,11 +36,11 @@ const MinhaConta = () => {
             }
         }
         getPedidos();
-    },[user.admin === 1]);
+    },[user.admin === 1, pedidosAndamento, pedidosFinalizados ]);
 
 
     return (
-        <div className={styles.container}>
+        <div className={`container ${styles.container}`}>
             <h1>Minha Conta</h1>
             {user?.admin === 1 ? (
                 <Lojas />

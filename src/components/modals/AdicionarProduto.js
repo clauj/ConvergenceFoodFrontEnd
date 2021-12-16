@@ -118,7 +118,7 @@ const AdicionarProduto = ({
             onChange={(event) => setCategoria(event.target.value)}
           >
             {categorias.map((categoria) => (
-              <option value={categoria.id}>{categoria.name}</option>
+              <option value={categoria.id} key={categoria.id}>{categoria.name}</option>
             ))}
           </select>
           <label htmlFor="quantidade">Quantidade</label>

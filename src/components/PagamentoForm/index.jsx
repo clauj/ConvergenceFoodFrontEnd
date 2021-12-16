@@ -1,140 +1,238 @@
-import React, { useContext, useEffect, useState } from 'react';
-import { UserContext } from '../../context/UserContext';
+import React, { useContext, useEffect, useState } from "react";
+import { UserContext } from "../../context/UserContext";
 import api from "../../service/api";
-import styles from './styles.module.css'
+import styles from "./styles.module.css";
+import InputMask from "react-input-mask";
+import TextField from "@material-ui/core/TextField";
+import InputLabel from '@mui/material/InputLabel';
+import MenuItem from '@mui/material/MenuItem';
+import FormControl from '@mui/material/FormControl';
+import Select from '@mui/material/Select';
+
 
 function PagamentoForm({ handleSubmit }) {
-    const [metodosPagamento, setMetodosPagamento] = useState([]);
-    const [metodoPagamento, setMetodoPagamento] = useState("");
-    const [erro, setErro] = useState("");
-    const [loading, setLoading] = useState(false);
-    const [cardNumber, setCardNumber] = useState(null);
-    const [cardholderName, setCardHolderName] = useState(null);
-    const [cardExpirationMonth, setCardExpirationMonth] = useState(null);
-    const [cardExpirationYear, setCardExpirationYear] = useState(null);
-    const [securityCode, setSecurityCode] = useState(null);
-    const [identificationType, setIdentificationType] = useState("CPF");
-    const [identificationNumber, setIdentificationNumber] = useState(null);
+  const [metodosPagamento, setMetodosPagamento] = useState([]);
+  const [metodoPagamento, setMetodoPagamento] = useState("");
+  const [erro, setErro] = useState("");
+  const [loading, setLoading] = useState(false);
+  const [cardNumber, setCardNumber] = useState(null);
+  const [cardholderName, setCardHolderName] = useState(null);
+  const [cardExpirationMonth, setCardExpirationMonth] = useState(null);
+  const [cardExpirationYear, setCardExpirationYear] = useState(null);
+  const [securityCode, setSecurityCode] = useState(null);
+  const [identificationType, setIdentificationType] = useState("CPF");
+  const [identificationNumber, setIdentificationNumber] = useState(null);
 
-    const { enderecos, token } = useContext(UserContext);
+  const { enderecos, token } = useContext(UserContext);
 
-    useEffect(() => {
-        async function fetchMetodos() {
-            let config = {
-                headers: {
-                    Accept: "application/json",
-                    Authorization: `Bearer ${token}`,
-                },
-            };
+  useEffect(() => {
+    async function fetchMetodos() {
+      let config = {
+        headers: {
+          Accept: "application/json",
+          Authorization: `Bearer ${token}`,
+        },
+      };
 
-            const { data } = await api.get(`pagamento/metodos`, config);
-            setMetodosPagamento(data);
-        }
-        fetchMetodos();
-    }, []);
-
-    const handleMetodo = (metodo) => {
-        setMetodoPagamento(metodo.target.value);
-    };
-
-    const handleSubmitForm = (e) => {
-        e.preventDefault();
-        handleSubmit({
-            metodoPagamento,
-            cardNumber,
-            cardholderName,
-            cardExpirationMonth,
-            cardExpirationYear,
-            securityCode,
-            identificationType,
-            identificationNumber
-        })
+      const { data } = await api.get(`pagamento/metodos`, config);
+      setMetodosPagamento(data);
     }
+    fetchMetodos();
+  }, []);
 
+  const handleMetodo = (metodo) => {
+    setMetodoPagamento(metodo.target.value);
+  };
 
-    return (
-        <form className={styles.form} onSubmit={handleSubmitForm}>
-            <div>
-                <label htmlFor="metodos">Bandeira do Cartão:</label>
-                <select name="metodos" id="metodos" onChange={(id) => handleMetodo(id)}>
-                    {metodosPagamento
-                        .sort((a, b) => (a.name > b.name ? 1 : -1))
-                        .map((metodo) => (
-                            <option value={metodo.id}>{metodo.name}</option>
-                        ))}
-                </select>
-            </div>
-            <div>
-                <label htmlFor="cardNumber">Numero do Cartão:</label>
-                <input
-                    type="number"
-                    id="cardNumber"
-                    name="cardNumber"
-                    onChange={(event) => setCardNumber(event.target.value)}
-                ></input>
-            </div>
-            <div>
-                <label htmlFor="cardholderName">Nome do Titular:</label>
-                <input
-                    type="text"
-                    id="cardholderName"
-                    name="cardholderName"
-                    onChange={(event) => setCardHolderName(event.target.value)}
-                ></input>
-            </div>
-            <div>
-                <label htmlFor="cardExpirationMonth">Mês de expiração:</label>
-                <input
-                    type="number"
-                    id="cardExpirationMonth"
-                    name="cardExpirationMonth"
-                    min="1"
-                    max="12"
-                    maxLength="2"
-                    onChange={(event) => setCardExpirationMonth(event.target.value)}
-                ></input>
-            </div>
-            <div>
-                <label htmlFor="cardExpirationYear">Ano de expiração:</label>
-                <input
-                    type="number"
-                    id="cardExpirationYear"
-                    name="cardExpirationYear"
-                    min="111"
-                    maxLength="3"
-                    onChange={(event) => setCardExpirationYear(event.target.value)}
-                ></input>
-            </div>
-            <div>
-                <label htmlFor="securityCode">Código de Segurança (CVV):</label>
-                <input
-                    type="number"
-                    id="securityCode"
-                    name="securityCode"
-                    min="111"
-                    max="999"
-                    maxLength="3"
-                    onChange={(event) => setSecurityCode(event.target.value)}
-                ></input>
-            </div>
-            <div>
-                <label htmlFor="identificationNumber">CPF:</label>
-                <input
-                    type="number"
-                    id="identificationNumber"
-                    name="identificationNumber"
-                    maxLength="11"
-                    onChange={(event) => setIdentificationNumber(event.target.value)}
-                ></input>
-            </div>
-            <div>
-                <button disabled={loading} className={styles.pagamento}>
-                    {loading ? "Realizando pagamento..." : "Realizar Pagamento"}
-                </button>
-                <p>{erro}</p>
-            </div>
-        </form>
-    );
+  const handleMaskCardNumber = (target) => {
+      const number = target
+    if (number.length === 19) {
+        const tratado = number.replace(/\s/g, '');
+        setCardNumber(tratado);
+    }
+  }
+
+  const handleMaskIdentificationNumber = (target) => {
+      const idnumber = target
+      if (idnumber.length === 14) {
+          const tratado = idnumber.replace(/[-.]/g, '');
+          setIdentificationNumber(tratado);
+      }
+  }
+
+  const handleSubmitForm = (e) => {
+    e.preventDefault();
+    handleSubmit({
+      metodoPagamento,
+      cardNumber,
+      cardholderName,
+      cardExpirationMonth,
+      cardExpirationYear,
+      securityCode,
+      identificationType,
+      identificationNumber,
+    });
+  };
+
+  return (
+    <form className={styles.form} onSubmit={handleSubmitForm}>
+      <div className={styles.bandeira}>
+        <Select 
+        label="Bandeira do Cartão"
+        id="metodos"
+        onChange={(id) => handleMetodo(id)}
+        selected="selected"
+        >
+        {metodosPagamento
+        .sort((a, b) => (a.name > b.name ? 1 : -1))
+        .map((metodo) => (
+            <MenuItem value={metodo.id} key={metodo.id}>{metodo.name}</MenuItem>
+        ))
+        }
+        </Select>
+      </div>
+      <div>
+        <InputMask
+          mask="9999 9999 9999 9999"
+          maskChar=" "
+          value={cardNumber}
+          onChange={({ target }) => {
+            handleMaskCardNumber(target.value);
+          }}
+        >
+          {(props) => (
+            <TextField
+              {...props}
+              variant="outlined"
+              required
+              fullWidth
+              name="cardNumber"
+              label="Numero do Cartão"
+              type="text"
+              id="cardNumber"
+              autoComplete="cardNumber"
+            />
+          )}
+        </InputMask>
+      </div>
+      <div>
+        <TextField
+          variant="outlined"
+          required
+          fullWidth
+          name="cardholderName"
+          label="Nome do Titular"
+          type="text"
+          id="cardholderName"
+          autoComplete="cardholderName"
+          onChange={({ target }) => setCardHolderName(target.value)}
+        />
+      </div>
+      <div>
+        <InputMask
+          mask="99"
+          maskChar=" "
+          value={cardExpirationMonth}
+          onChange={({ target }) => {
+            setCardExpirationMonth(target.value);
+          }}
+        >
+          {(props) => (
+            <TextField
+              {...props}
+              variant="outlined"
+              required
+              fullWidth
+              name="cardExpirationMonth"
+              label="Mês de expiração"
+              type="text"
+              id="cardExpirationMonth"
+              autoComplete="cardExpirationMonth"
+            />
+          )}
+        </InputMask>
+      </div>
+      <div>
+        <InputMask
+          mask="99"
+          maskChar=" "
+          value={cardExpirationYear}
+          onChange={({ target }) => {
+            setCardExpirationYear(target.value);
+          }}
+        >
+          {(inputProps) => (
+            <TextField
+              {...inputProps}
+              variant="outlined"
+              required
+              fullWidth
+              name="cardExpirationYear"
+              label="Ano de expiração"
+              type="text"
+              id="cardExpirationYear"
+              autoComplete="cardExpirationYear"
+            />
+          )}
+        </InputMask>
+      </div>
+      <div>
+        <InputMask
+          mask="999"
+          maskChar=" "
+          value={securityCode}
+          onChange={({ target }) => {
+            setSecurityCode(target.value);
+          }}
+        >
+          {(props) => (
+            <TextField
+              {...props}
+              variant="outlined"
+              required
+              fullWidth
+              name="securityCode"
+              label="Código de Segurança"
+              type="text"
+              id="securityCode"
+              autoComplete="securityCode"
+            />
+          )}
+        </InputMask>
+      </div>
+      <div>
+        <InputMask
+          mask="999.999.999-99"
+          maskChar=" "
+          value={identificationNumber}
+          onChange={({ target }) => {
+            handleMaskIdentificationNumber(target.value);
+          }}
+        >
+          {(props) => (
+            <TextField
+              {...props}
+              type="text"
+              variant="outlined"
+              required
+              id="identificationNumber"
+              label="CPF"
+              name="identificationNumber"
+              autoComplete="identificationNumber"
+              fullWidth
+              disableUnderline
+            />
+          )}
+        </InputMask>
+      </div>
+      <div>
+        <button disabled={loading} className={styles.pagamento}>
+          {loading ? "Realizando pagamento..." : "Realizar Pagamento"}
+        </button>
+        <p>{erro}</p>
+      </div>
+    </form>
+  );
 }
 
 export default PagamentoForm;

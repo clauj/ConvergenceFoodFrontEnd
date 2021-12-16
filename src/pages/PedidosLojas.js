@@ -13,24 +13,24 @@ const PedidosLojas = () => {
 
     const {token} = useContext(UserContext);
 
-    useEffect(() => {
-        async function getPedidos() {
+    // useEffect(() => {
+    //     async function getPedidos() {
             
-            let config = {
-                method: "get",
-                headers: {
-                  Accept: "application/json",
-                  Authorization: `Bearer ${token}`,
-                },
-              };
+    //         let config = {
+    //             method: "get",
+    //             headers: {
+    //               Accept: "application/json",
+    //               Authorization: `Bearer ${token}`,
+    //             },
+    //           };
 
-              const { data} = await api.get(`pedidos/loja/${params.id}`, config);
-              console.log(data.pedidos);
-              setPedidos(data.pedidos);
-        }
-        getPedidos();
-        setInterval(getPedidos, 20000);
-    }, []);
+    //           const { data} = await api.get(`pedidos/loja/${params.id}`, config);
+    //           console.log(data.pedidos);
+    //           setPedidos(data.pedidos);
+    //     }
+    //     getPedidos();
+    //     setInterval(getPedidos, 20000);
+    // }, []);
 
     useEffect(() => {
       async function getPedidos() {
@@ -48,7 +48,7 @@ const PedidosLojas = () => {
             setPedidos(data.pedidos);
       }
       getPedidos();
-  }, [update]);
+  }, [[...pedidos], update]);
 
     async function aceitarPedido(id_pedido) {
       let config = {

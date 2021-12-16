@@ -15,7 +15,6 @@ const Lojas = () => {
   const [modalEditarLoja, setModalEditarLoja] = useState({});
   const { token, user, assinatura, getUser } = useContext(UserContext);
 
-  console.log(assinatura);
 
   const history = useHistory();
 

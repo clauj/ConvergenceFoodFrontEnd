@@ -50,10 +50,10 @@ const PedidoUser = (props) => {
             setPedido(pedidoData);
             getLoja(pedidoData.pedido.loja_id);
         }
-
+        getLoja();
         getPedido();
 
-    }, []);
+    }, [loja, pedido]);
 
     return(
         pedido && loja ? 

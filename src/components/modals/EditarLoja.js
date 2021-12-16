@@ -235,7 +235,7 @@ const EditarLoja = ({ closeModal, setLojasResponse, loja }) => {
             />
             <select disabled name="estado_id" id="" onChange={e => setEstadoId(e.target.value)}>
               {ufs.map(uf => (
-                <option selected={uf.id === estadoId} value={uf.id}>{uf?.name}</option>
+                <option selected={uf.id === estadoId} value={uf.id} key={uf.id}>{uf?.name}</option>
               ))}
             </select>
             <select disabled name="cidade_id" id="" onChange={e => setCidadeId(e.target.value)}>

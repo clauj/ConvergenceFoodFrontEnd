@@ -29,6 +29,7 @@ const PedidosLojas = () => {
               setPedidos(data.pedidos);
         }
         getPedidos();
+        setInterval(getPedidos, 20000);
     }, []);
 
     useEffect(() => {
@@ -47,7 +48,6 @@ const PedidosLojas = () => {
             setPedidos(data.pedidos);
       }
       getPedidos();
-      console.log('att');
   }, [update]);
 
     async function aceitarPedido(id_pedido) {

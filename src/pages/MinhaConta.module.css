@@ -1,0 +1,14 @@
+.pedidos {
+    max-height: 200px;
+    width: 100%;
+    overflow-y: scroll;
+    margin-bottom: 5%;
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    
+}
+
+.container {
+    padding: 2%;
+}

@@ -57,7 +57,7 @@ const Checkout = () => {
       handleCreateCart(cardTokenMp);
     }
     catch (error) {
-      console.log(error.response);
+      console.log(error);
       setLoading(false);
     }
   };

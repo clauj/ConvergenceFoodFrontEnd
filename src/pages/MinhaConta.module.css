@@ -14,3 +14,20 @@
 .container > div > h2 {
     margin-top: 1.5rem;
 }
+
+.atualizar {
+    font-size: 1.2rem;
+    text-transform: uppercase;
+    color: #FFF;
+    background-color: #E75C62;
+    margin: 0.25rem 0;
+    width: fit-content;
+    padding: 0.35rem;
+    border-radius: 0.2rem;
+    border: 0;
+    cursor: pointer;
+}
+
+.atualizar:hover {
+    background-color: #b30b13;
+}
